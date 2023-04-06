@@ -36,8 +36,6 @@
     "stand:dev": "NODE_ENV=standDevelopment webpack serve --open --progress --mode development --hot --progress --config webpack.config.js",
     "start": "yarn stand:generate && yarn stand:start",
     "start:dev": "yarn stand:generate && yarn stand:dev",
-    "clone-repos": "sh clone-repositories.sh",
-    "copy-deps": "node ./scripts/copy-deps.js",
     "stand:deps": "sh clone-repositories.sh && node ./scripts/copy-deps.js && yarn"
   },
   "config": {
