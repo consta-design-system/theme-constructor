@@ -1,0 +1,88 @@
+.constructor--ScenarioModalItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  gap: var(--space-s);
+
+  &_disabled {
+    & .Text {
+      color: var(--color-typo-ghost);
+    }
+
+    & > .constructor--ScenarioModalItem-Point {
+      & > .icons--Icon {
+        color: var(--color-control-typo-disable);
+      }
+
+      &::after {
+        background-color: var(--color-control-bg-disable);
+        opacity: 1;
+      }
+    }
+  }
+
+  &:not(.constructor--ScenarioModalItem_disabled) {
+    cursor: pointer;
+
+    &:hover {
+      & .Text {
+        color: var(--color-typo-link);
+      }
+
+      & .icons--Icon {
+        color: #fff;
+      }
+
+      & .constructor--ScenarioModalItem-Point::after {
+        background-color: var(--color-typo-link);
+        opacity: 1;
+      }
+    }
+  }
+
+  &-Content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--space-3xs);
+
+    & > * {
+      transition: color 0.3s;
+    }
+  }
+
+  &-Point {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--space-xl);
+    height: var(--space-xl);
+    border-radius: 50%;
+
+    & > .icons--Icon {
+      color: var(--color-typo-secondary);
+      transition: color 0.3s;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-control-typo-default);
+      border-radius: 50%;
+      opacity: 0.08;
+      transition: background-color 0.3s, opacity 0.3s;
+    }
+  }
+}

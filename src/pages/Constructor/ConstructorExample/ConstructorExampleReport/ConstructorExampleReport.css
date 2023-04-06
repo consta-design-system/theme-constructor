@@ -1,0 +1,46 @@
+.constructor--ConstructorExampleReport {
+  &-TableStatus {
+    &_view {
+      &_success {
+        color: var(--color-typo-success);
+      }
+
+      &_alert {
+        color: var(--color-typo-alert);
+      }
+
+      &_caution {
+        color: var(--color-typo-caution);
+      }
+
+      &_system {
+        color: var(--color-typo-system);
+      }
+    }
+  }
+
+  &-TableButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    gap: var(--space-2xs);
+  }
+
+  &-Description {
+    max-width: 328px;
+  }
+
+  &-Blue {
+    color: var(--color-typo-link);
+  }
+
+  &-Table {
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--control-radius);
+
+    & .Table-ContentCell {
+      padding: var(--space-xs) var(--space-s);
+    }
+  }
+}

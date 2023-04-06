@@ -1,0 +1,23 @@
+.constructor--VarFieldItem {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 70px;
+
+  &-Content {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  &-Description,
+  &-Value {
+    font-family: var(--font-primary);
+  }
+
+  & > *:last-child {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid var(--color-bg-border);
+  }
+}

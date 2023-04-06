@@ -1,0 +1,32 @@
+.constructor--ConstructorExampleAnalytic {
+  &-Title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-Description {
+    max-width: 328px;
+  }
+
+  &-Tags {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 526px;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  &-Add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-m);
+
+    & > .Text {
+      max-width: 228px;
+    }
+  }
+}

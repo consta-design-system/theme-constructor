@@ -1,0 +1,14 @@
+.constructor--VarFieldList {
+  overflow: hidden;
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--control-radius);
+
+  &-Group {
+    padding: var(--space-xs) var(--space-m);
+    background-color: var(--color-bg-secondary);
+  }
+
+  & > *:not(:last-child) {
+    border-bottom: 1px solid var(--color-bg-border);
+  }
+}

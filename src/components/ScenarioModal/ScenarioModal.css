@@ -1,0 +1,15 @@
+.constructor--ScenarioModal {
+  &.Modal-Window {
+    max-width: 518px;
+  }
+
+  &-Root {
+    z-index: 2;
+  }
+
+  & > .constructor--ScenarioModal-Item:not(:last-child) {
+    margin-bottom: var(--space-s);
+    padding-bottom: var(--space-s);
+    border-bottom: 1px solid var(--color-bg-border);
+  }
+}

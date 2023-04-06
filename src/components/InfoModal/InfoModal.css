@@ -1,0 +1,15 @@
+.constructor--InfoModal {
+  &.Modal-Window {
+    max-width: 380px;
+  }
+
+  &-Button {
+    &_view_alert {
+      background-color: var(--color-bg-alert);
+
+      &:hover {
+        background-color: var(--color-typo-alert);
+      }
+    }
+  }
+}

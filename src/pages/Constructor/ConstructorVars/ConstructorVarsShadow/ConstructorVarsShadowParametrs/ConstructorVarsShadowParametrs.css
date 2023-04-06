@@ -1,0 +1,41 @@
+.constructor--ConstructorVarsShadowParametrs {
+  &-Reset {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    gap: var(--space-xs);
+
+    &:hover {
+      & > .Button {
+        background-color: var(--color-control-bg-ghost-hover);
+      }
+
+      & > .Text {
+        color: var(--color-typo-link);
+      }
+    }
+  }
+
+  &-Content {
+    display: flex;
+    width: 100%;
+    gap: var(--space-xs);
+  }
+
+  &-Controls {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-xs);
+  }
+
+  &-Block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}

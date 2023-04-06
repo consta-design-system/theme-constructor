@@ -1,0 +1,19 @@
+.constructor--BannerButton {
+  display: block;
+  color: var(--color-typo-primary);
+  background-size: cover;
+  border-radius: calc(var(--control-radius) * 2);
+  text-decoration: none;
+
+  &-Top {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+  }
+
+  &_onlyIcon {
+    --size: calc(var(--graphics-size-m) + (var(--space-m) * 2));
+    width: var(--size);
+    height: var(--size);
+  }
+}

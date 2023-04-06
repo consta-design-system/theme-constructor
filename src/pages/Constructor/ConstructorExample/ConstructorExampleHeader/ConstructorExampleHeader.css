@@ -1,0 +1,54 @@
+.constructor--ConstructorExampleHeader {
+  width: 100%;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-bg-border);
+
+  &-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: var(--space-2xl);
+  }
+
+  &-Input {
+    display: none;
+  }
+
+  &-Date {
+    max-width: 214px;
+  }
+
+  &-Breadcrumbs {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &-Statuses {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-xs);
+
+    & > .Select {
+      max-width: 230px;
+    }
+  }
+
+  &-Controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-Inputs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-xs);
+
+    & > .DatePicker {
+      max-width: 214px;
+    }
+  }
+}

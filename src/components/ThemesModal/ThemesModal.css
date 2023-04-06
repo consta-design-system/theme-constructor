@@ -1,0 +1,48 @@
+.constructor--ThemesModal {
+  &.Modal-Window {
+    min-width: 550px;
+    max-width: 550px;
+  }
+
+  &-Wrapper {
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 60vh;
+    max-height: 60vh;
+
+    & > .constructor--ThemesModal-Item:not(:last-child) {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-s);
+      border-bottom: 1px solid var(--color-bg-border);
+    }
+  }
+
+  &-Mock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 325px;
+    height: 100%;
+    min-height: 60vh;
+  }
+
+  &-Item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: var(--space-s);
+  }
+
+  &-ItemButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-s);
+  }
+}

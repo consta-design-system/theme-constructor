@@ -1,0 +1,41 @@
+.constructor--ConstructorExample {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  max-width: 800px;
+  height: max-content;
+  max-height: max-content;
+  background: var(--color-bg-default);
+
+  &_sticky {
+    position: sticky;
+    top: calc(100vh - var(--constructor-example-height));
+  }
+
+  &-Top {
+    width: 100%;
+    background: var(--color-bg-secondary);
+  }
+
+  &-Footer {
+    position: sticky;
+    z-index: 1;
+    bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-bg-border);
+  }
+
+  &-Text {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 1280px) {
+    border-left: 1px solid var(--color-bg-border);
+    border-right: 1px solid var(--color-bg-border);
+  }
+}

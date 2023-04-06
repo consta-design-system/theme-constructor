@@ -1,0 +1,56 @@
+.constructor--ConstructorVarsColorOption {
+  &-Controls {
+    display: grid;
+    grid-template-columns: auto var(--space-5xl);
+    gap: var(--space-xs);
+    width: 100%;
+  }
+
+  &-Inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-xs);
+  }
+
+  &-Example {
+    position: relative;
+    background-color: var(--constructor-example-color);
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--control-radius);
+  }
+
+  &-ColorPicker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &-Button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--space-xl);
+    height: var(--space-xl);
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--color-control-bg-ghost-hover);
+    }
+
+    & .icons--Icon {
+      color: var(--color-control-typo-ghost);
+    }
+  }
+}

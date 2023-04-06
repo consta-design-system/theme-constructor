@@ -1,0 +1,5 @@
+.constructor--SaveModal {
+  &.Modal-Window {
+    max-width: 550px;
+  }
+}

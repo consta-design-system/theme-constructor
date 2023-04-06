@@ -1,0 +1,54 @@
+.constructor--Menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 288px;
+  height: 100%;
+
+  &-Navigation {
+    width: 100%;
+  }
+
+  &-List {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: var(--space-l);
+  }
+
+  &-Block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-xs);
+  }
+
+  &-Group {
+    display: flex;
+    align-items: center;
+    min-height: var(--space-3xl);
+  }
+
+  &-Item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: var(--space-3xl);
+    background: transparent;
+    border: none;
+    border-radius: var(--control-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: var(--color-control-bg-clear-hover);
+    }
+  }
+}
+
+.Sidebar_hasOverlay {
+  z-index: 2;
+}

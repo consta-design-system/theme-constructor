@@ -1,0 +1,14 @@
+.constructor--ConstructorFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--color-bg-secondary);
+
+  &-Label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+}

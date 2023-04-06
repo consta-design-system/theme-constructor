@@ -1,0 +1,86 @@
+.constructor--ConstructorExampleInstaller {
+  &-Description {
+    max-width: 328px;
+  }
+
+  &-Content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: calc(var(--space-3xl) + var(--space-xl));
+  }
+
+  &-Controls {
+    width: 100%;
+    max-width: 352px;
+  }
+
+  &-Checkboxes {
+    & .Checkbox-Label {
+      color: var(--color-typo-secondary);
+      font-size: var(--size-text-2xs);
+      line-height: var(--line-height-text-m);
+    }
+  }
+
+  &-Result {
+    width: 100%;
+  }
+
+  &-Divider {
+    width: 100%;
+    height: 1px;
+    background: var(--color-bg-border);
+  }
+
+  &-ImageContainer {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 250px;
+    background-color: var(--color-bg-stripe);
+    border-radius: var(--control-radius);
+  }
+
+  &-Image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &-Status {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: var(--space-3xs);
+      width: calc(var(--space-xs) - var(--space-3xs));
+      height: calc(var(--space-xs) - var(--space-3xs));
+      background-color: var(--color-bg-warning);
+      border-radius: 50%;
+    }
+  }
+
+  &-User {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-bg-border);
+    border-radius: var(--control-radius);
+  }
+
+  &-Users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    & > .AvatarGroup {
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.constructor--ConstructorExampleAnalyticCard {
+  width: 100%;
+
+  &-Title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  &-Values {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--space-3xl);
+  }
+
+  &-Point {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  &-Value {
+    &_view_system {
+      color: var(--color-typo-system);
+    }
+  }
+}

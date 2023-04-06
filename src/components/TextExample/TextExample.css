@@ -1,0 +1,5 @@
+.constructor--TextExample {
+  font-family: var(--text-example-font);
+  font-size: var(--text-example-size);
+  line-height: var(--text-example-line-height);
+}
