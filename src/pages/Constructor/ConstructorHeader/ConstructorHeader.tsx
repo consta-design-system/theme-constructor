@@ -63,9 +63,7 @@ export const ConstructorHeader: React.FC<{ className?: string }> = ({
           onClick={setShowMenu.on}
           view="ghost"
         />
-        <span className={cnConstructorHeader('LogoWrapper')}>
-          <Logo className={cnConstructorHeader('Logo')} />
-        </span>
+        <Logo className={cnConstructorHeader('Logo')} />
       </div>
       <div className={cnConstructorHeader('Controls')}>
         <ChoiceGroup

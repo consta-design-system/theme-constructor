@@ -41,32 +41,32 @@ export const getColors = (
   '--color-control-typo-primary': {
     description: 'Цвет акцентного текста',
     group: '$color-base-base',
-    l: '+100',
+    l: '+100%',
   },
   '--color-control-typo-primary-hover': {
     description: 'Цвет акцентного текста',
     group: '$color-base-base',
-    l: '+100',
+    l: '+100%',
   },
   '--color-control-typo-ghost': {
     description: 'Цвет дополнительного текста контрола',
     group: '$color-base-base',
-    ...(type === 'dark' ? { a: 75 } : { h: '+1', l: '+8', a: 80 }),
+    ...(type === 'dark' ? { a: 75 } : { h: '+1', l: '+8%', a: 80 }),
   },
   '--color-control-typo-ghost-hover': {
     description: 'Цвет дополнительного текста контрола по ховеру',
     group: '$color-base-base',
-    ...(type === 'dark' ? { a: 90 } : { h: '+1', l: '+8', a: 75 }),
+    ...(type === 'dark' ? { a: 90 } : { h: '+1', l: '+8%', a: 75 }),
   },
   '--color-control-typo-clear': {
     description: 'Цвет акцентного текста',
     group: '$color-base-base',
-    ...(type === 'dark' ? { a: 75 } : { h: '+1', l: '+8', a: 80 }),
+    ...(type === 'dark' ? { a: 75 } : { h: '+1', l: '+8%', a: 80 }),
   },
   '--color-control-typo-clear-hover': {
     description: 'Цвет акцентного текста',
     group: '$color-base-base',
-    ...(type === 'dark' ? { a: 90 } : { h: '+1', l: '+8', a: 75 }),
+    ...(type === 'dark' ? { a: 90 } : { h: '+1', l: '+8%', a: 75 }),
   },
   '--color-control-typo-disable': {
     description: 'Цвет основного текста неактивного контрола',
@@ -85,7 +85,7 @@ export const getColors = (
   '--color-bg-soft': {
     description: 'Цвет молока',
     group: '$color-base-essential',
-    ...(type === 'dark' ? { a: 90, l: '+100' } : { a: 90 }),
+    ...(type === 'dark' ? { a: 90, l: '+100%' } : { a: 90 }),
   },
   '--color-control-bg-default': {
     description: 'Цвет фона контрола',
@@ -111,24 +111,24 @@ export const getColors = (
   '--color-typo-link': {
     description: 'Цвет основной ссылки',
     group: '$color-base-path',
-    ...(type === 'dark' ? { h: '-2', l: '+12' } : {}),
+    ...(type === 'dark' ? { h: '-2', l: '+12%' } : {}),
   },
   '--color-typo-link-minor': {
     description: 'Цвет второстепенной ссылки',
     group: '$color-base-path',
     ...(type === 'dark'
-      ? { h: '-2', s: '-55', l: '+20' }
-      : { s: '-35', l: '-10' }),
+      ? { h: '-2', s: '-55%', l: '+20%' }
+      : { s: '-35%', l: '-10%' }),
   },
   '--color-typo-link-hover': {
     description: 'Цвет ховера ссылки',
     group: '$color-base-path',
-    ...(type === 'dark' ? { h: '-2', l: '+26' } : { l: '+8' }),
+    ...(type === 'dark' ? { h: '-2', l: '+26%' } : { l: '+8%' }),
   },
   '--color-control-bg-border-focus': {
     description: 'Цвет аутлайна контролов при фокусе',
     group: '$color-base-path',
-    ...(type === 'dark' ? { l: '+10' } : { l: '+9' }),
+    ...(type === 'dark' ? { l: '+10%' } : { l: '+9%' }),
   },
   '--color-control-bg-focus': {
     description: 'Цвет тени в состонии фокуса',
@@ -147,7 +147,7 @@ export const getColors = (
   '--color-control-bg-primary-hover': {
     description: 'Цвет фона активного контрола по ховеру',
     group: '$color-base-path',
-    l: '+9',
+    l: '+9%',
   },
   '--color-control-bg-border-secondary': {
     description: 'Цвет фона бордеров котрола',
@@ -156,17 +156,17 @@ export const getColors = (
   '--color-control-bg-border-secondary-hover': {
     description: 'Цвет фона бордеров контрола по ховеру',
     group: '$color-base-path',
-    l: '+9',
+    l: '+9%',
   },
   '--color-control-typo-secondary': {
     description: 'Цвет второстепеного текста контрола',
     group: '$color-base-path',
-    ...(type === 'dark' ? { h: '-2', l: '+12' } : {}),
+    ...(type === 'dark' ? { h: '-2', l: '+12%' } : {}),
   },
   '--color-control-typo-secondary-hover': {
     description: 'Цвет акцентного текста',
     group: '$color-base-path',
-    ...(type === 'dark' ? { h: '-2', l: '+26' } : { l: '+9' }),
+    ...(type === 'dark' ? { h: '-2', l: '+26%' } : { l: '+9%' }),
   },
   '--color-bg-border': {
     description: 'Цвет границ',
@@ -188,7 +188,7 @@ export const getColors = (
     description: 'Цвет паранджи',
     group: '$color-base-phantom',
     a: 85,
-    ...(type === 'dark' ? { l: '-11' } : { l: '-92' }),
+    ...(type === 'dark' ? { l: '-11' } : { l: '-92%' }),
   },
   '--color-scroll-bg': {
     group: '$color-base-phantom',
@@ -310,7 +310,7 @@ export const getColors = (
   '--color-typo-critical': {
     description: 'Цвет текста системнный',
     group: '$color-base-critical',
-    ...(type === 'dark' ? { l: '+9' } : {}),
+    ...(type === 'dark' ? { l: '+9%' } : {}),
   },
   '--color-shadow-group-1': { ...(type === 'dark' ? { a: 8 } : { a: 2 }) },
   '--color-shadow-group-2': { ...(type === 'dark' ? { a: 32 } : { a: 16 }) },
@@ -425,12 +425,12 @@ export const colorGroupsNames: Record<string, string> = {
 
 export const colorBaseNames: ColorBase = {
   '$color-base-base':
-    'Базовый цвет содержимого, от которого выстраиваются цвета текста, иконок, ...',
+    'Базовый цвет содержимого, от которого выстраиваются цвета текста, иконок, контролов',
   '$color-base-essential': 'Базовый цвет поверхностей',
   '$color-base-project':
     'Проектный цвет, от которого выстраивают акцентные состояния',
   '$color-base-phantom':
-    'Тонирующий цвет, от которого выстраиватся бордеры, оверлей под модальными окнами, ...',
+    'Тонирующий цвет, от которого выстраиватся бордеры, оверлей под модальными окнами, скролл',
   '$color-base-path':
     'Цвет ссылок и контролов, от которого выстраиваются все их состояния',
   '$color-base-system': 'Цвет системнный',

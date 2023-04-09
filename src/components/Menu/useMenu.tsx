@@ -15,7 +15,7 @@ type MenuItem = {
   rightSide?: React.ReactNode;
 };
 
-type ModalType = 'new' | 'open' | 'save' | 'download' | 'list';
+type ModalType = 'new' | 'open' | 'save' | 'download' | 'list' | 'quit';
 
 const groupsArr = [
   {

@@ -38,7 +38,7 @@ export const getPresetTsCode = (
   )}: ThemePreset = {\n\tcolor: {\n\t\tprimary: '${presetName}${toCapitalize(
     mode,
   )}',\n\t\taccent: '${presetName}${toCapitalize(
-    mode,
+    invertMode,
   )}',\n\t\tinvert: '${presetName}${toCapitalize(invertMode)}',
         },\n\tcontrol: '${presetName}',\n\tfont: '${presetName}',\n\tsize: '${presetName}',\n\tspace: '${presetName}',\n\tshadow: '${presetName}',
       \n};\n\n`;

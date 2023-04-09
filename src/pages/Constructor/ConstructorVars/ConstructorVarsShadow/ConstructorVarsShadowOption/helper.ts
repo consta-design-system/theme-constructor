@@ -1,5 +1,7 @@
+import Color from 'color';
+
 import { ShadowParams } from '##/types/theme';
-import { convertSizeToNumber, getRgbaString, rgbToRgba } from '##/utils/sizes';
+import { convertSizeToNumber } from '##/utils/sizes';
 
 export const getColorOpacity = (color: string) =>
   Number(color.split(')')[0].split(',')[3].trim());
@@ -12,9 +14,9 @@ export const createColor = (
   color: string,
   opacity: [number, number],
 ): [string, string] => {
-  const [r1, g1, b1, a1] = rgbToRgba(color, opacity[0]);
-  const [r2, g2, b2, a2] = rgbToRgba(color, opacity[1]);
-  return [getRgbaString(r1, g1, b1, a1), getRgbaString(r2, g2, b2, a2)];
+  const c1 = Color(color).rgb().alpha(opacity[0]).string();
+  const c2 = Color(color).rgb().alpha(opacity[1]).string();
+  return [c1, c2];
 };
 
 export const createShadow = (

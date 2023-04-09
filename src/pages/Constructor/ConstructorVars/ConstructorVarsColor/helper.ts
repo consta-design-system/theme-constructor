@@ -1,3 +1,5 @@
+import IMask from 'imask';
+
 import { createColor } from '##/hooks/useSave/helpers/color';
 import { ColorBase, ColorKeys } from '##/types/theme';
 import { getColors } from '##/utils/theme/colors';
@@ -45,3 +47,81 @@ export const colorGroups = [
   { id: 'font', label: 'Шрифт' },
   { id: 'control', label: 'Контролы' },
 ];
+
+export const hexMask = {
+  mask: '{#}HEXHEXHEXHEXHEXHEX',
+  blocks: {
+    HEX: {
+      mask: IMask.MaskedEnum,
+      enum: [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+      ],
+    },
+  },
+};
+
+export const rgbaMask = {
+  mask: 'rgba(RGB, RGB, RGB, ALPHA)',
+  blocks: {
+    RGB: {
+      mask: Number,
+      min: 0,
+      max: 255,
+    },
+    ALPHA: {
+      mask: Number,
+      min: 0,
+      max: 1,
+      radix: '.',
+      mapToRadix: ['.'],
+    },
+  },
+};
+
+export const hslaMask = {
+  mask: 'hsla(RAD, PERC%,PERC%, ALPHA)',
+  blocks: {
+    RAD: {
+      mask: Number,
+      min: 0,
+      max: 360,
+      radix: '.',
+      mapToRadix: ['.'],
+    },
+    PERC: {
+      mask: Number,
+      min: 0,
+      max: 100,
+      radix: '.',
+      mapToRadix: ['.'],
+    },
+    ALPHA: {
+      mask: Number,
+      min: 0,
+      max: 1,
+      radix: '.',
+      mapToRadix: ['.'],
+    },
+  },
+};

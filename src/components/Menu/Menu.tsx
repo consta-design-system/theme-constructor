@@ -2,11 +2,12 @@ import './Menu.css';
 
 import { IconAdd } from '@consta/icons/IconAdd';
 import { IconClose } from '@consta/icons/IconClose';
+import { IconQuestion } from '@consta/icons/IconQuestion';
 import { Button } from '@consta/uikit/Button';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Sidebar } from '@consta/uikit/Sidebar';
 import { Text } from '@consta/uikit/Text';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
 import IconFeedback from '##/icons/Feedback.icon.svg';
@@ -29,6 +30,7 @@ const cnMenu = cn('Menu');
 
 export const Menu = (props: Props) => {
   const { isOpen, onClose: onCloseProp } = props;
+  const [path, setPath] = useState<string | undefined>();
 
   const {
     groups,
@@ -99,24 +101,53 @@ export const Menu = (props: Props) => {
       <div className={cnMenu('Banners')}>
         <BannerButton
           className={cnMixSpace({ mB: 'xs' })}
-          as="a"
           label="Сообщить о проблеме"
-          href="https://github.com/consta-design-system/uikit/issues/new/choose"
-          target="_blank"
+          as="div"
+          onClick={() => {
+            setPath(
+              'https://github.com/consta-design-system/uikit/issues/new/choose',
+            );
+            setModalType('quit');
+          }}
           icon={IconFeedback}
           description="Исправим ошибку, которую вы найдёте"
         />
         <BannerButton
-          as="a"
           label="Telegram"
+          as="div"
           icon={IconTelegram}
-          href="https://t.me/Consta_Chat"
-          target="_blank"
+          onClick={() => {
+            setPath('https://t.me/Consta_Chat');
+            setModalType('quit');
+          }}
         />
       </div>
       <ThemesModal
         isOpen={modalType === 'list' || modalType === 'open'}
         onClose={onClose}
+      />
+      <InfoModal
+        isOpen={modalType === 'quit'}
+        onClose={onClose}
+        title="Покинуть страницу"
+        iconStatus="primary"
+        content="Вы точно хотите покинуть страницу? Изменения в текущей теме не будут сохранены"
+        titleIcon={IconQuestion}
+        buttons={[
+          {
+            label: 'Уйти',
+            view: 'primary',
+            onClick: () => {
+              onClose();
+              clearAutoSave();
+              window.open(path, '_blank');
+            },
+          },
+          {
+            label: 'Сохранить текущую тему',
+            onClick: () => setModalType('save'),
+          },
+        ]}
       />
       <InfoModal
         isOpen={modalType === 'new'}

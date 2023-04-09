@@ -19,7 +19,7 @@ export const Constructor = () => {
         <div className={cnConstructor('RightSide')}>
           <div className={cnConstructor('Bg', { type: 'color' })} />
           <div className={cnConstructor('Bg', { type: 'image' })} />
-          <ConstructorExample />
+          <ConstructorExample className={cnConstructor('Example')} />
           <ConstructorFooter className={cnConstructor('Footer')} />
         </div>
       </div>

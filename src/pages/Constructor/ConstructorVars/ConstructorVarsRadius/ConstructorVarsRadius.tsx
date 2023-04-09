@@ -32,6 +32,8 @@ export const ConstructorVarsRadius = () => {
         NUM: {
           mask: Number,
           min: 0,
+          radix: '.',
+          mapToRadix: ['.'],
         },
       },
     },

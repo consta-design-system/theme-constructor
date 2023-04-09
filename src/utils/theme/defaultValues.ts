@@ -46,9 +46,9 @@ export const defaultShadowDarkColors: ShadowColors = {
 };
 
 export const defaultShadowLightColors: ShadowColors = {
-  '--shadow-group': ['rgba(0, 14, 21, 0.02)', 'rgba(0, 14, 21, 0.16)'],
-  '--shadow-layer': ['rgba(0, 14, 21, 0.04)', 'rgba(0, 14, 21, 0.12)'],
-  '--shadow-modal': ['rgba(0, 14, 21, 0.04)', 'rgba(0, 14, 21, 0.12)'],
+  '--shadow-group': ['rgba(0, 32, 51, 0.02)', 'rgba(0, 32, 51, 0.16)'],
+  '--shadow-layer': ['rgba(0, 32, 51, 0.04)', 'rgba(0, 32, 51, 0.12)'],
+  '--shadow-modal': ['rgba(0, 32, 51, 0.04)', 'rgba(0, 32, 51, 0.12)'],
 };
 
 export const defaultShadowParams: Record<keyof ShadowColors, ShadowParams> = {

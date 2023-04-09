@@ -18,9 +18,6 @@
   }
 
   &-Footer {
-    position: sticky;
-    z-index: 1;
-    bottom: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;

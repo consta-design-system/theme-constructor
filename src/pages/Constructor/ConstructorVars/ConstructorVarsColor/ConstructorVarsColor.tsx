@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import { colorDarkAtom, colorLightAtom } from '##/modules/colors';
 import { themeAtom } from '##/modules/theme';
 import { ColorBase } from '##/types/theme';
+import { colorBaseNames } from '##/utils/theme/colors';
 
 import { ConstructorVarsColorOption } from './ConstructorVarsColorOption';
 import { colorGroups, getColorsArray } from './helper';
@@ -67,7 +68,7 @@ export const ConstructorVarsColor = () => {
           title={key}
           key={`${key}-${type}`}
           value={colors[key as keyof ColorBase]}
-          description="Базовый цвет содержимого, от которого выстраиваются цвета текста, иконок, контролов"
+          description={colorBaseNames[key as keyof ColorBase]}
           items={getItems(key as keyof ColorBase)}
           onChange={(value) => {
             setColor({ ...colors, [key as keyof ColorBase]: value });

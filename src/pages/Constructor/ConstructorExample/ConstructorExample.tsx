@@ -20,7 +20,9 @@ import { useExampleTheme } from './useExampleTheme';
 
 const cnConstructorExample = cn('ConstructorExample');
 
-export const ConstructorExample = () => {
+export const ConstructorExample: React.FC<{ className?: string }> = ({
+  className,
+}) => {
   const [sticky, setSticky] = useFlag();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -48,7 +50,7 @@ export const ConstructorExample = () => {
       <Theme
         ref={ref}
         preset={preset}
-        className={cnConstructorExample({ sticky })}
+        className={cnConstructorExample({ sticky }, [className])}
         style={{ ['--constructor-example-height' as string]: `${height}px` }}
       >
         <ConstructorExampleHeader
