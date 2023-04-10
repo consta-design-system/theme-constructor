@@ -8,11 +8,11 @@ import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { ThemePreset } from '@consta/uikit/Theme';
 import { useFlag } from '@consta/uikit/useFlag';
 import { useAction, useAtom } from '@reatom/npm-react';
-import React, { useRef } from 'react';
+import React from 'react';
 
 import { DownloadModal } from '##/components/DownloadModal';
 import { Menu } from '##/components/Menu';
-import { useConstructorPresets } from '##/hooks/useConstructorPresets';
+import { SaveModal } from '##/components/SaveModal';
 import Logo from '##/images/Logo.image.svg';
 import {
   getThemeIcon,
@@ -28,13 +28,10 @@ export const ConstructorHeader: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const [showSaveModal, setShowSaveModal] = useFlag();
+  const [showDownloadModal, setShowDownloadModal] = useFlag();
   const [showMenu, setShowMenu] = useFlag();
 
   const [theme] = useAtom(themeAtom);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const { onUploadPresetFile } = useConstructorPresets();
 
   const setTheme = useAction((ctx, value: ThemePreset) =>
     themeAtom(ctx, value),
@@ -47,13 +44,6 @@ export const ConstructorHeader: React.FC<{ className?: string }> = ({
         className,
       ])}
     >
-      <input
-        ref={inputRef}
-        type="file"
-        onChange={onUploadPresetFile}
-        className={cnConstructorHeader('Input')}
-        accept="application/JSON"
-      />
       <div className={cnConstructorHeader('Top')}>
         <Button
           iconLeft={IconHamburger}
@@ -78,20 +68,24 @@ export const ConstructorHeader: React.FC<{ className?: string }> = ({
         />
         <div className={cnConstructorHeader('Buttons')}>
           <Button
-            onClick={() => inputRef.current?.click()}
+            onClick={setShowSaveModal.on}
             size="s"
             view="ghost"
-            label="Импорт"
+            label="Сохранить"
           />
           <Button
             size="s"
             iconLeft={IconDownload}
             onlyIcon
-            onClick={setShowSaveModal.on}
+            onClick={setShowDownloadModal.on}
           />
         </div>
       </div>
-      <DownloadModal isOpen={showSaveModal} onClose={setShowSaveModal.off} />
+      <SaveModal isOpen={showSaveModal} onClose={setShowSaveModal.off} />
+      <DownloadModal
+        isOpen={showDownloadModal}
+        onClose={setShowDownloadModal.off}
+      />
       <Menu isOpen={showMenu} onClose={setShowMenu.off} />
     </div>
   );

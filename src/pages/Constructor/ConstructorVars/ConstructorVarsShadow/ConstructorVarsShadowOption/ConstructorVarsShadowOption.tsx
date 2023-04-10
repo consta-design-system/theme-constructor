@@ -51,9 +51,9 @@ export const ConstructorVarsShadowOption = (props: Props) => {
 
   const [c1, c2, o1, o2] = useMemo(() => {
     const color = Color(colors[0]);
-    const rgb = color.rgb().string();
+    const rgb = color.rgb();
     const hex = color.hex();
-    return [rgb, hex, color.alpha(), color.alpha()];
+    return [rgb.alpha(1).string(), hex, color.alpha(), color.alpha()];
   }, [colors[0], colors[1]]);
 
   const [rgb, setRgb] = useState<string | null>(c1);

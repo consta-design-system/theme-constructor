@@ -7,7 +7,7 @@ import { Button } from '@consta/uikit/Button';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Sidebar } from '@consta/uikit/Sidebar';
 import { Text } from '@consta/uikit/Text';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
 import IconFeedback from '##/icons/Feedback.icon.svg';
@@ -32,18 +32,28 @@ export const Menu = (props: Props) => {
   const { isOpen, onClose: onCloseProp } = props;
   const [path, setPath] = useState<string | undefined>();
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const {
     groups,
     modalType,
     onClose: onCloseModal,
     setModalType,
     clearAutoSave,
-  } = useMenu(onCloseProp);
-  const { clearPreset } = useConstructorPresets();
+  } = useMenu({
+    onClose: onCloseProp,
+    inputRef,
+  });
+  const { clearPreset, onUploadPresetFile } = useConstructorPresets();
 
   const onClose = () => {
     onCloseModal();
     onCloseProp?.();
+  };
+
+  const onUpload: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    onUploadPresetFile(e);
+    onClose();
   };
 
   return (
@@ -53,6 +63,13 @@ export const Menu = (props: Props) => {
       position="left"
       onClickOutside={onClose}
     >
+      <input
+        ref={inputRef}
+        type="file"
+        onChange={onUpload}
+        className={cnMenu('Input')}
+        accept="application/JSON"
+      />
       <div className={cnMenu('Navigation')}>
         <Button
           onlyIcon
