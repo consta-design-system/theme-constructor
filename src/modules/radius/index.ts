@@ -11,15 +11,17 @@ import { autoSavePresetAtom } from '../presets';
 export const radiusAtom = atom<number>(defaultRadius);
 
 onUpdate(radiusAtom, (ctx, value) => {
-  const preset = ctx.get(autoSavePresetAtom);
-  const date = new Date().toISOString();
-  autoSavePresetAtom(ctx, {
-    name: preset?.name ?? defaultAutoSaveName,
-    createdAt: preset?.createdAt ?? date,
-    modifiedAt: date,
-    theme: {
-      ...(preset?.theme ?? {}),
-      radius: value,
-    },
-  });
+  if (value !== defaultRadius) {
+    const preset = ctx.get(autoSavePresetAtom);
+    const date = new Date().toISOString();
+    autoSavePresetAtom(ctx, {
+      name: preset?.name ?? defaultAutoSaveName,
+      createdAt: preset?.createdAt ?? date,
+      modifiedAt: date,
+      theme: {
+        ...(preset?.theme ?? {}),
+        radius: value,
+      },
+    });
+  }
 });

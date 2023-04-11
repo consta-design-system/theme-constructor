@@ -17,52 +17,58 @@ export const lineHeightTermAtom = atom<number>(defaultLineHeight);
 export const fontAtom = atom<string>(defaultFont);
 
 onUpdate(textSizeTermAtom, (ctx, value) => {
-  const preset = ctx.get(autoSavePresetAtom);
-  const date = new Date().toISOString();
-  autoSavePresetAtom(ctx, {
-    name: preset?.name ?? defaultAutoSaveName,
-    createdAt: preset?.createdAt ?? date,
-    modifiedAt: date,
-    theme: {
-      ...(preset?.theme ?? {}),
-      font: {
-        ...(preset?.theme?.font ?? {}),
-        size: value,
+  if (value !== defaultTextSize) {
+    const preset = ctx.get(autoSavePresetAtom);
+    const date = new Date().toISOString();
+    autoSavePresetAtom(ctx, {
+      name: preset?.name ?? defaultAutoSaveName,
+      createdAt: preset?.createdAt ?? date,
+      modifiedAt: date,
+      theme: {
+        ...(preset?.theme ?? {}),
+        font: {
+          ...(preset?.theme?.font ?? {}),
+          size: value,
+        },
       },
-    },
-  });
+    });
+  }
 });
 
 onUpdate(lineHeightTermAtom, (ctx, value) => {
-  const preset = ctx.get(autoSavePresetAtom);
-  const date = new Date().toISOString();
-  autoSavePresetAtom(ctx, {
-    name: preset?.name ?? defaultAutoSaveName,
-    createdAt: preset?.createdAt ?? date,
-    modifiedAt: date,
-    theme: {
-      ...(preset?.theme ?? {}),
-      font: {
-        ...(preset?.theme?.font ?? {}),
-        lineHeight: value,
+  if (value !== defaultLineHeight) {
+    const preset = ctx.get(autoSavePresetAtom);
+    const date = new Date().toISOString();
+    autoSavePresetAtom(ctx, {
+      name: preset?.name ?? defaultAutoSaveName,
+      createdAt: preset?.createdAt ?? date,
+      modifiedAt: date,
+      theme: {
+        ...(preset?.theme ?? {}),
+        font: {
+          ...(preset?.theme?.font ?? {}),
+          lineHeight: value,
+        },
       },
-    },
-  });
+    });
+  }
 });
 
 onUpdate(fontAtom, (ctx, value) => {
-  const preset = ctx.get(autoSavePresetAtom);
-  const date = new Date().toISOString();
-  autoSavePresetAtom(ctx, {
-    name: preset?.name ?? defaultAutoSaveName,
-    createdAt: preset?.createdAt ?? date,
-    modifiedAt: date,
-    theme: {
-      ...(preset?.theme ?? {}),
-      font: {
-        ...(preset?.theme?.font ?? {}),
-        font: value,
+  if (value !== defaultFont) {
+    const preset = ctx.get(autoSavePresetAtom);
+    const date = new Date().toISOString();
+    autoSavePresetAtom(ctx, {
+      name: preset?.name ?? defaultAutoSaveName,
+      createdAt: preset?.createdAt ?? date,
+      modifiedAt: date,
+      theme: {
+        ...(preset?.theme ?? {}),
+        font: {
+          ...(preset?.theme?.font ?? {}),
+          font: value,
+        },
       },
-    },
-  });
+    });
+  }
 });

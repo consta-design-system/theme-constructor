@@ -11,15 +11,17 @@ import { autoSavePresetAtom } from '../presets';
 export const spaceFactorAtom = atom<number>(defaultSpace);
 
 onUpdate(spaceFactorAtom, (ctx, value) => {
-  const preset = ctx.get(autoSavePresetAtom);
-  const date = new Date().toISOString();
-  autoSavePresetAtom(ctx, {
-    name: preset?.name ?? defaultAutoSaveName,
-    createdAt: preset?.createdAt ?? date,
-    modifiedAt: date,
-    theme: {
-      ...(preset?.theme ?? {}),
-      space: value,
-    },
-  });
+  if (value !== defaultSpace) {
+    const preset = ctx.get(autoSavePresetAtom);
+    const date = new Date().toISOString();
+    autoSavePresetAtom(ctx, {
+      name: preset?.name ?? defaultAutoSaveName,
+      createdAt: preset?.createdAt ?? date,
+      modifiedAt: date,
+      theme: {
+        ...(preset?.theme ?? {}),
+        space: value,
+      },
+    });
+  }
 });
