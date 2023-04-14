@@ -72,6 +72,10 @@
     border-radius: var(--control-radius);
   }
 
+  &-Play {
+    position: absolute;
+  }
+
   &-Users {
     display: flex;
     flex-direction: column;

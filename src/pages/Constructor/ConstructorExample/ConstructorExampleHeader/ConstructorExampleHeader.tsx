@@ -43,95 +43,112 @@ export const ConstructorExampleHeader = (props: Props) => {
   return (
     <div className={cnConstructorExampleHeader(null, [className])}>
       <div
-        className={cnConstructorExampleHeader('Header', [
-          cnMixSpace({ mB: 'l' }),
+        className={cnConstructorExampleHeader('Wrapper', [
+          cnMixSpace({ mB: 'l', pT: 'xl', pB: '3xl', pH: '3xl' }),
         ])}
       >
-        <Breadcrumbs
-          className={cnConstructorExampleHeader('Breadcrumbs')}
-          items={crumbs}
-          style={{ zIndex: 4 }}
-          onlyIconRoot
-          size="xs"
-        />
-        <User
-          withArrow
-          size="m"
-          avatarUrl={image}
-          view="clear"
-          name="Олег"
-          info="Пользователь Consta"
-        />
-      </div>
-      <Text
-        className={cnMixSpace({ mB: 'l' })}
-        size="2xl"
-        weight="semibold"
-        lineHeight="m"
-      >
-        Петуниизатор 1.0
-      </Text>
-      <div
-        className={cnConstructorExampleHeader('Statuses', [
-          cnMixSpace({ mB: 'l' }),
-        ])}
-      >
-        <ChoiceGroup
-          items={choices}
-          name="statuses"
-          size="s"
-          value={choice}
-          onChange={({ value }) => setChoice(value)}
-          getItemLabel={(item) => item}
-        />
-        <Select
-          placeholder="Тип петунии"
-          items={types}
-          value={type}
-          size="s"
-          onChange={({ value }) => setType(value)}
-          getItemLabel={(item) => item}
-          getItemKey={(item) => item}
-        />
-      </div>
-      <Text
-        size="s"
-        lineHeight="m"
-        view="secondary"
-        className={cnMixSpace({ mB: 'xs' })}
-      >
-        Период установки петуний
-      </Text>
-      <div className={cnConstructorExampleHeader('Controls')}>
-        <div className={cnConstructorExampleHeader('Inputs')}>
-          <DatePicker
-            value={dates}
+        <div className={cnConstructorExampleHeader('Header')}>
+          <Breadcrumbs
+            className={cnConstructorExampleHeader('Breadcrumbs')}
+            items={crumbs}
+            style={{ zIndex: 4 }}
+            onlyIconRoot
             size="xs"
-            placeholder="ДД.ММ.ГГГГ"
-            rightSide={[IconCalendar, IconCalendar]}
-            type="date-time-range"
-            className={cnConstructorExampleHeader('Date', [
-              cnMixSpace({ mR: 'm' }),
-            ])}
-            onChange={({ value }) => setDates(value)}
           />
-          <Switch
-            size="s"
-            className={cnMixSpace({ mR: '2xs' })}
-            checked={flag}
-            onChange={({ checked }) => setFlag[checked ? 'on' : 'off']()}
+          <User
+            withArrow
+            size="m"
+            avatarUrl={image}
+            view="clear"
+            name="Олег"
+            info="Пользователь Consta"
           />
-          <Text size="2xs" lineHeight="m" view="ghost">
-            Учитывать выходные
-          </Text>
         </div>
-        <Button
-          label="Сбросить фильтры"
-          size="xs"
-          view="ghost"
-          form="round"
-          onClick={clearValues}
-        />
+        <Text
+          className={cnMixSpace({ mB: 's', mT: '2xl' })}
+          size="2xl"
+          weight="semibold"
+          lineHeight="m"
+        >
+          Предпросмотр темы
+        </Text>
+        <Text
+          className={cnConstructorExampleHeader('Description')}
+          size="s"
+          lineHeight="m"
+          view="secondary"
+        >
+          В этом тестовом интерфейсе будут отражаться изменения настроек
+          конструктора
+        </Text>
+      </div>
+      <div
+        className={cnConstructorExampleHeader('Content', [
+          cnMixSpace({ pT: '2xl', pB: 'xs', pH: '3xl' }),
+        ])}
+      >
+        <div
+          className={cnConstructorExampleHeader('Statuses', [
+            cnMixSpace({ mB: 'l' }),
+          ])}
+        >
+          <ChoiceGroup
+            items={choices}
+            name="statuses"
+            size="s"
+            value={choice}
+            onChange={({ value }) => setChoice(value)}
+            getItemLabel={(item) => item}
+          />
+          <Select
+            placeholder="Имя команды"
+            items={types}
+            value={type}
+            size="s"
+            onChange={({ value }) => setType(value)}
+            getItemLabel={(item) => item}
+            getItemKey={(item) => item}
+          />
+        </div>
+        <Text
+          size="s"
+          lineHeight="m"
+          view="secondary"
+          className={cnMixSpace({ mB: 'xs' })}
+        >
+          Период
+        </Text>
+        <div className={cnConstructorExampleHeader('Controls')}>
+          <div className={cnConstructorExampleHeader('Inputs')}>
+            <DatePicker
+              value={dates}
+              size="xs"
+              placeholder="ДД.ММ.ГГГГ"
+              rightSide={[IconCalendar, IconCalendar]}
+              type="date-time-range"
+              className={cnConstructorExampleHeader('Date', [
+                cnMixSpace({ mR: 'm' }),
+              ])}
+              onChange={({ value }) => setDates(value)}
+            />
+            <Switch
+              size="s"
+              className={cnMixSpace({ mR: '2xs' })}
+              checked={flag}
+              onChange={({ checked }) => setFlag[checked ? 'on' : 'off']()}
+            />
+            <Text size="2xs" lineHeight="m" view="ghost">
+              Учитывать выходные
+            </Text>
+          </div>
+          <Button
+            label="Сбросить фильтры"
+            size="xs"
+            view="ghost"
+            form="round"
+            onClick={clearValues}
+          />
+        </div>
       </div>
     </div>
   );

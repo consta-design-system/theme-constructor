@@ -50,7 +50,7 @@ export const ConstructorExampleAnalytic = (props: Props) => {
           cnMixSpace({ mT: 's', mB: 'xl' }),
         ])}
       >
-        Здесь вы можете ознакомиться с аналитикой по установкам петуний
+        Здесь вы можете ознакомиться с аналитикой по работе команд.
       </Text>
       <div
         className={cnConstructorExampleAnalytic('Tags', [

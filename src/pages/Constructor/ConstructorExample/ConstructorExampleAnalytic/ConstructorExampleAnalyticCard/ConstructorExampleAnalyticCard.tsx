@@ -14,8 +14,8 @@ export type ConstructorExampleAnalyticCardProps = {
   status: BadgePropStatus;
   title: string;
   description: string;
-  attempts: number;
-  installations: number;
+  tasks: number;
+  closedTasks: number;
 };
 
 const badgeLabelMap: Record<BadgePropStatus, string> = {
@@ -29,7 +29,7 @@ const badgeLabelMap: Record<BadgePropStatus, string> = {
 export const ConstructorExampleAnalyticCard = (
   props: ConstructorExampleAnalyticCardProps,
 ) => {
-  const { status, title, description, attempts, installations } = props;
+  const { status, title, description, tasks, closedTasks } = props;
 
   const [view1, view2] = useMemo<
     [TextPropView | 'system', TextPropView | 'system']
@@ -90,7 +90,7 @@ export const ConstructorExampleAnalyticCard = (
             size="m"
             lineHeight="m"
           >
-            {attempts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+            {tasks.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
           </Text>
         </div>
         <div className={cnConstructorExampleAnalyticCard('Point')}>
@@ -106,7 +106,7 @@ export const ConstructorExampleAnalyticCard = (
             size="m"
             lineHeight="m"
           >
-            {installations.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+            {closedTasks.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
           </Text>
         </div>
       </div>

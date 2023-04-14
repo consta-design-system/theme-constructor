@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import './ConstructorExampleInstaller.css';
 
+import { IconPlay } from '@consta/icons/IconPlay';
 import { AvatarGroup } from '@consta/uikit/AvatarGroup';
 import { CheckboxGroup } from '@consta/uikit/CheckboxGroup';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
@@ -10,7 +11,7 @@ import { User } from '@consta/uikit/User';
 import { UserSelect } from '@consta/uikit/UserSelect';
 import React, { useState } from 'react';
 
-import image from '##/images/Kitty.png';
+import image from '##/images/Example.png';
 import userImage from '##/images/User.png';
 import { cn } from '##/utils/bem';
 
@@ -47,16 +48,16 @@ export const ConstructorExampleInstaller = (props: Props) => {
         lineHeight="m"
         view="secondary"
       >
-        Здесь вы можете установить петунию на конечного пользователя
+        Здесь вы можете поставить задачу на команду и выбрать руководителя
       </Text>
       <div className={cnConstructorExampleInstaller('Content')}>
         <div className={cnConstructorExampleInstaller('Controls')}>
           <UserSelect
             size="s"
             placeholder="Выберите пользователя"
-            label="Цель"
+            label="Руководитель"
             required
-            caption="Установка петунии окажет положительный эффект на этого пользователя"
+            caption="Руководитель будет декомпозировать и делегировать задачи на отдельных участников команд"
             value={user}
             className={cnMixSpace({ mB: 'l' })}
             onChange={({ value }) => setUser(value)}
@@ -65,7 +66,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
             items={users}
           />
           <Text size="s" lineHeight="m" view="secondary">
-            Интенсивность установки
+            Срочность выполнения
           </Text>
           <Slider
             className={cnMixSpace({ mV: '2xs' })}
@@ -78,7 +79,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
             lineHeight="s"
             className={cnMixSpace({ mB: 'l' })}
           >
-            Высокое значение может приводить к ошибкам
+            Высокое значение влияет на срок исполнения
           </Text>
           <Text
             size="s"
@@ -86,7 +87,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
             view="secondary"
             className={cnMixSpace({ mB: 'm' })}
           >
-            Типы петуний
+            Ответственные команды
           </Text>
           <CheckboxGroup
             items={variables}
@@ -104,13 +105,20 @@ export const ConstructorExampleInstaller = (props: Props) => {
             view="secondary"
             className={cnMixSpace({ mB: 'xs' })}
           >
-            Демонстрация процесса
+            Обучение
           </Text>
           <div
             className={cnConstructorExampleInstaller('ImageContainer', [
               cnMixSpace({ mB: 'xs' }),
             ])}
           >
+            <IconPlay
+              className={cnConstructorExampleInstaller('Play', [
+                cnMixSpace({ mT: '2xs', pT: '3xs' }),
+              ])}
+              size="l"
+              view="secondary"
+            />
             <img
               src={image}
               className={cnConstructorExampleInstaller('Image')}
@@ -141,7 +149,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
                 cnMixSpace({ pL: 'm' }),
               ])}
             >
-              Ожидает установки
+              Ожидает постановки задачи
             </Text>
           </div>
         </div>
@@ -157,7 +165,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
           view="secondary"
           className={cnMixSpace({ mB: 'l' })}
         >
-          Счастливые обладатели петуний
+          Участники команд
         </Text>
         <AvatarGroup items={users} size="l" visibleCount="auto" />
       </div>
