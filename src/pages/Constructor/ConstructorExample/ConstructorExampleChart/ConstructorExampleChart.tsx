@@ -43,8 +43,8 @@ export const ConstructorExampleChart = (props: Props) => {
         lineHeight="m"
         view="secondary"
       >
-        График показывает количество выполненных командой задач за определённую
-        дату
+        Заменить на: График показывает количество выполненных задач за
+        определённый отрезок времени.
       </Text>
       <Area
         style={{
@@ -80,7 +80,7 @@ export const ConstructorExampleChart = (props: Props) => {
         color={Object.keys(colorMapLine).map((key) => colorMapLine[key])}
       />
       <Text size="xs" lineHeight="m" view="secondary" align="center">
-        Выполненных задач
+        Выполненные задачи
       </Text>
     </>
   );

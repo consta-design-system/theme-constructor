@@ -38,7 +38,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
           className,
         ])}
       >
-        Установщик
+        Постановщик задач
       </Text>
       <Text
         className={cnConstructorExampleInstaller('Description', [

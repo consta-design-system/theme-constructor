@@ -40,7 +40,7 @@ export const ConstructorExampleAnalytic = (props: Props) => {
           iconLeft={IconSettings}
           ref={buttonRef}
         />
-        <Tooltip anchorRef={buttonRef}>Настроить дешборд по аналитике</Tooltip>
+        <Tooltip anchorRef={buttonRef}>Настроить дашборд по аналитике</Tooltip>
       </div>
       <Text
         size="s"
@@ -50,7 +50,7 @@ export const ConstructorExampleAnalytic = (props: Props) => {
           cnMixSpace({ mT: 's', mB: 'xl' }),
         ])}
       >
-        Здесь вы можете ознакомиться с аналитикой по работе команд.
+        Посмотреть аналитику по работе команд.
       </Text>
       <div
         className={cnConstructorExampleAnalytic('Tags', [

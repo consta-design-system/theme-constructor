@@ -20,8 +20,10 @@ export const ConstructorLeftSide = () => {
   return (
     <div className={cnConstructorLeftSide()}>
       <ConstructorHeader className={cnConstructorLeftSide('Header')} />
-      <ConstructorVarsSelector />
-      <ConstructorVars />
+      <div className={cnConstructorLeftSide('Content')}>
+        <ConstructorVarsSelector />
+        <ConstructorVars />
+      </div>
       <ScenarioModal isOpen={isOpen} onClose={setIsOpen.off} />
     </div>
   );

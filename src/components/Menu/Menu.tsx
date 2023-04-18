@@ -148,11 +148,11 @@ export const Menu = (props: Props) => {
         onClose={onClose}
         title="Покинуть страницу"
         iconStatus="primary"
-        content="Вы точно хотите покинуть страницу? Изменения в текущей теме не будут сохранены"
+        content="Вы действительно хотите закрыть страницу? Изменения будут утеряны, если их не сохранить."
         titleIcon={IconQuestion}
         buttons={[
           {
-            label: 'Уйти',
+            label: 'Выйти',
             view: 'primary',
             onClick: () => {
               onClose();

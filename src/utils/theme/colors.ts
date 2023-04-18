@@ -92,7 +92,7 @@ export const getColors = (
     group: '$color-base-essential',
   },
   '--color-control-bg-secondary': {
-    description: 'Цвет фона бордеров котрола',
+    description: 'Цвет фона бордеров контрола',
     group: '$color-base-essential',
     a: 0,
   },
