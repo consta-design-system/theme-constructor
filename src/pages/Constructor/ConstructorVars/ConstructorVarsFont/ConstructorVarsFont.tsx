@@ -1,3 +1,5 @@
+import './ConstructorVarsFont.css';
+
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Select } from '@consta/uikit/Select';
 import { TextField, useIMask } from '@consta/uikit/TextField';
@@ -14,6 +16,7 @@ import {
   textSizeTermAtom,
 } from '##/modules/font';
 import { LineHeight, TextSize } from '##/types/theme';
+import { cn } from '##/utils/bem';
 import { convertSizeToNumber } from '##/utils/sizes';
 import {
   calculateLineHeights,
@@ -32,6 +35,8 @@ const groups = [
     label: 'Межстрочный интервал',
   },
 ];
+
+const cnConstructorVarsFont = cn('ConstructorVarsFont');
 
 export const ConstructorVarsFont = () => {
   const [textSize] = useAtom(textSizeTermAtom);
@@ -139,6 +144,7 @@ export const ConstructorVarsFont = () => {
             items={googleFonts}
             getItemKey={(item) => item}
             size="s"
+            dropdownClassName={cnConstructorVarsFont('Select')}
             getItemLabel={(item) => item}
             onChange={({ value }) => setFont(value ?? 'Inter')}
           />
