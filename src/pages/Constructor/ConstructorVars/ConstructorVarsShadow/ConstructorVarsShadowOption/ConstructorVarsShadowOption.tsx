@@ -1,6 +1,7 @@
 import './ConstructorVarsShadowOption.css';
 
 import { TextField, useIMask } from '@consta/uikit/TextField';
+import Color from 'color';
 import IMask from 'imask';
 import React, { useMemo, useState } from 'react';
 
@@ -8,22 +9,10 @@ import { ShadowExample } from '##/components/ShadowExample';
 import { VarField } from '##/components/VarField';
 import { ShadowParams } from '##/types/theme';
 import { cn } from '##/utils/bem';
-import {
-  convertSizeToNumber,
-  getHexString,
-  getRgbString,
-  hexToRgb,
-  rgbaToHex,
-  rgbaToRgb,
-} from '##/utils/sizes';
+import { convertSizeToNumber } from '##/utils/sizes';
 
 import { ConstructorVarsShadowParametrs } from '../ConstructorVarsShadowParametrs';
-import {
-  createColor,
-  createShadow,
-  getColorOpacity,
-  percentToFloat,
-} from './helper';
+import { createColor, createShadow, percentToFloat } from './helper';
 
 type Props = {
   title: string;
@@ -35,11 +24,6 @@ type Props = {
 };
 
 const cnConstructorVarsShadowOption = cn('ConstructorVarsShadowOption');
-
-const hexToRgbString = (color: string) => {
-  const [r, g, b] = hexToRgb(color);
-  return getRgbString(r, g, b);
-};
 
 export const ConstructorVarsShadowOption = (props: Props) => {
   const { title, description, colors, params, onChangeColor, onChangeParams } =
@@ -66,32 +50,26 @@ export const ConstructorVarsShadowOption = (props: Props) => {
   };
 
   const [c1, c2, o1, o2] = useMemo(() => {
-    const rgb = rgbaToRgb(colors[0]);
-    const hex = rgbaToHex(colors[0]);
-    return [
-      getRgbString(rgb[0], rgb[1], rgb[2]),
-      getHexString(hex[0], hex[1], hex[2]),
-      getColorOpacity(colors[0]),
-      getColorOpacity(colors[1]),
-    ];
+    const color = Color(colors[0]);
+    const rgb = color.rgb();
+    const hex = color.hex();
+    return [rgb.alpha(1).string(), hex, color.alpha(), color.alpha()];
   }, [colors[0], colors[1]]);
 
   const [rgb, setRgb] = useState<string | null>(c1);
   const [hex, setHex] = useState<string | null>(c2);
 
   const handleColorChange = (value: string | null, type: 'rgb' | 'hex') => {
-    const color =
-      type === 'hex'
-        ? hexToRgbString(value ?? '#000000')
-        : value ?? 'rgb(0, 0, 0)';
+    const color = Color(value ?? '#000');
     (type === 'hex' ? setHex : setRgb)(value);
     if (type === 'rgb') {
-      const [a, b, c] = rgbaToHex(value ?? 'rgb(0, 0, 0)');
-      setHex(getHexString(a, b, c));
+      setRgb(value);
+      setHex(color.hex());
     } else {
-      setRgb(color);
+      setHex(value);
+      setRgb(color.rgb().string());
     }
-    onChangeColor(createColor(color, [o1, o2]));
+    onChangeColor(createColor(color.hex(), [o1, o2]));
   };
 
   const { inputRef: hexRef } = useIMask({

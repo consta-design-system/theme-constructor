@@ -72,6 +72,19 @@
     border-radius: var(--control-radius);
   }
 
+  &-Play {
+    position: absolute;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: calc(var(--space-l) * 2.3);
+      height: calc(var(--space-l) * 2.3);
+      background-color: var(--color-bg-default);
+      border-radius: 50%;
+    }
+  }
+
   &-Users {
     display: flex;
     flex-direction: column;

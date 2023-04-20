@@ -28,7 +28,7 @@ const getDefaultTheme = () => {
   return presetGpnDefault;
 };
 
-export const themes = [presetGpnDark, presetGpnDefault];
+export const themes = [presetGpnDefault, presetGpnDark];
 
 export const getThemeKey = (theme: ThemePreset) => theme.color.primary;
 

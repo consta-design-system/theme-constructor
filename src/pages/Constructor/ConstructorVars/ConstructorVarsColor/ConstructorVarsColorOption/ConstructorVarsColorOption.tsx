@@ -4,25 +4,16 @@ import { IconSettings } from '@consta/icons/IconSettings';
 import { TextField, useIMask } from '@consta/uikit/TextField';
 import { useTheme } from '@consta/uikit/Theme';
 import { useDebounce } from '@consta/uikit/useDebounce';
-import IMask from 'imask';
+import Color from 'color';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ColorExample } from '##/components/ColorExample';
 import { VarField } from '##/components/VarField';
 import { VarFieldList } from '##/components/VarField/VarFieldList';
 import { cn } from '##/utils/bem';
-import {
-  getHexString,
-  getHslaString,
-  getRgbaString,
-  hexToHSLA,
-  hexToRgb,
-  hexToRgba,
-  hslaToRgba,
-  rgbaToHex,
-  rgbaToHSLA,
-} from '##/utils/sizes';
+import { hslToHslaStr, rgbToRgbaStr } from '##/utils/sizes';
 
+import { hexMask, hslaMask, rgbaMask } from '../helper';
 import { ColorOption } from '../types';
 
 const cnConstructtorVarsColorOption = cn('ConstructorVarsColorOption');
@@ -36,18 +27,18 @@ type Props = {
   groups?: Array<{ id: string; label: string }>;
 };
 
-const convertColor = (color: string) => {
-  const [h, s, l, a] = color.includes('#')
-    ? hexToHSLA(color)
-    : rgbaToHSLA(color);
-  const rgb = hexToRgba(color);
-  const hex = rgbaToHex(color);
+type ColorsVariants = {
+  hsla: string;
+  rgba: string;
+  hex: string;
+};
+
+const convertColor = (str: string): ColorsVariants => {
+  const color = Color(str).alpha(Color(str).object().alpha ?? 1);
   return {
-    hsla: `hsla(${h}, ${s}%, ${l}%, ${a / 100})`,
-    rgba: color.includes('#')
-      ? getRgbaString(rgb[0], rgb[1], rgb[2], a)
-      : color,
-    hex: color.includes('#') ? color : getHexString(hex[0], hex[1], hex[2]),
+    hsla: hslToHslaStr(color.hsl().string()),
+    rgba: rgbToRgbaStr(color.rgb().string()),
+    hex: color.hex(),
   };
 };
 
@@ -70,13 +61,10 @@ export const ConstructorVarsColorOption = (props: Props) => {
   const handleHexChange = (value: string | null) => {
     setHex(value);
     if (value) {
-      const [r = 0, g = 0, b = 0] = hexToRgb(value);
-      const alpha = Number(rgba?.split(')')[0].split(',')[3]);
-      const val = getRgbaString(r, g, b, alpha);
-      const [h = 0, s = 0, l = 0, a = 1] = rgbaToHSLA(val);
-      setHsla(getHslaString(h, s, l, a));
-      setRgba(val);
-      onChange?.(getRgbaString(r, g, b, alpha));
+      const color = Color(value ?? defaultColor);
+      setHsla(hslToHslaStr(color.hsl().string(), color.alpha()));
+      setRgba(rgbToRgbaStr(color.rgb().string(), color.alpha()));
+      onChange?.(rgbToRgbaStr(color.rgb().string(), color.alpha()));
       return;
     }
     onChange?.(defaultColor ?? '#000');
@@ -85,11 +73,10 @@ export const ConstructorVarsColorOption = (props: Props) => {
   const handleRgbaChange = (value: string | null) => {
     setRgba(value);
     if (value) {
-      const hex = rgbaToHex(value);
-      const [h = 0, s = 0, l = 0, a = 1] = rgbaToHSLA(value);
-      setHex(getHexString(hex[0] ?? 0, hex[1] ?? 0, hex[2] ?? 0));
-      setHsla(getHslaString(h, s, l, a));
-      onChange?.(value);
+      const color = Color(value ?? defaultColor);
+      setHex(color.hex());
+      setHsla(hslToHslaStr(color.hsl().string(), color.alpha()));
+      onChange?.(rgbToRgbaStr(color.rgb().string(), color.alpha()));
       return;
     }
     onChange?.(defaultColor ?? '#000');
@@ -98,12 +85,10 @@ export const ConstructorVarsColorOption = (props: Props) => {
   const handleHslaChange = (value: string | null) => {
     setHsla(value);
     if (value) {
-      const [r = 0, g = 0, b = 0, a = 1] = hslaToRgba(value);
-      const val = getRgbaString(r, g, b, a);
-      const hex = rgbaToHex(value);
-      setRgba(val);
-      setHex(getHexString(hex[0] ?? 0, hex[1] ?? 0, hex[2] ?? 0));
-      onChange?.(val);
+      const color = Color(value ?? defaultColor);
+      setRgba(rgbToRgbaStr(color.rgb().string(), color.alpha()));
+      setHex(color.hex());
+      onChange?.(rgbToRgbaStr(color.rgb().string(), color.alpha()));
       return;
     }
     onChange?.(defaultColor ?? '#000');
@@ -124,89 +109,27 @@ export const ConstructorVarsColorOption = (props: Props) => {
   const { inputRef: hexRef } = useIMask({
     value: hex,
     onChange: handleHexChange,
-    maskOptions: {
-      mask: '{#}HEXHEXHEXHEXHEXHEX',
-      blocks: {
-        HEX: {
-          mask: IMask.MaskedEnum,
-          enum: [
-            '0',
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F',
-          ],
-        },
-      },
-    },
+    maskOptions: hexMask,
   });
 
   const { inputRef: rgbaRef } = useIMask({
     value: rgba,
     onChange: handleRgbaChange,
-    maskOptions: {
-      mask: 'rgba(RGB, RGB, RGB, ALPHA)',
-      blocks: {
-        RGB: {
-          mask: Number,
-          min: 0,
-          max: 255,
-        },
-        ALPHA: {
-          mask: Number,
-          min: 0,
-          max: 1,
-          radix: '.',
-          mapToRadix: ['.'],
-        },
-      },
-    },
+    maskOptions: rgbaMask,
   });
 
   const { inputRef: hslaRef } = useIMask({
     value: hsla,
     onChange: handleHslaChange,
-    maskOptions: {
-      mask: 'hsla(RAD, PERC%,PERC%, ALPHA)',
-      blocks: {
-        RAD: {
-          mask: Number,
-          min: 0,
-          max: 360,
-          radix: '.',
-          mapToRadix: ['.'],
-        },
-        PERC: {
-          mask: Number,
-          min: 0,
-          max: 100,
-          radix: '.',
-          mapToRadix: ['.'],
-        },
-        ALPHA: {
-          mask: Number,
-          min: 0,
-          max: 1,
-          radix: '.',
-          mapToRadix: ['.'],
-        },
-      },
-    },
+    maskOptions: hslaMask,
   });
 
   const onReset = () => {
     onChange?.(defaultColor ?? '#000000');
+    const colors = convertColor(defaultColor ?? '#000000');
+    setHex(colors.hex);
+    setRgba(colors.rgba);
+    setHsla(colors.hsla);
   };
 
   useEffect(() => {
@@ -242,21 +165,21 @@ export const ConstructorVarsColorOption = (props: Props) => {
               inputRef={hslaRef}
             />
           </div>
-          <div
+          <button
+            type="button"
             style={{
               ['--constructor-example-color' as string]: value,
             }}
+            onClick={() => colorPickerRef.current?.click()}
             className={cnConstructtorVarsColorOption('Example')}
           >
-            <button
-              type="button"
-              onClick={() => colorPickerRef.current?.click()}
+            <div
               className={cnConstructtorVarsColorOption('Button', [
                 themeClassNames.color.invert,
               ])}
             >
               <IconSettings size="xs" view="ghost" />
-            </button>
+            </div>
             <input
               type="color"
               value={pickerValue ?? undefined}
@@ -264,7 +187,7 @@ export const ConstructorVarsColorOption = (props: Props) => {
               onChange={(e) => setPickerValue(e.target.value.toUpperCase())}
               className={cnConstructtorVarsColorOption('ColorPicker')}
             />
-          </div>
+          </button>
         </div>
       }
       listComponent={

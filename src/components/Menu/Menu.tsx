@@ -2,11 +2,12 @@ import './Menu.css';
 
 import { IconAdd } from '@consta/icons/IconAdd';
 import { IconClose } from '@consta/icons/IconClose';
+import { IconQuestion } from '@consta/icons/IconQuestion';
 import { Button } from '@consta/uikit/Button';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Sidebar } from '@consta/uikit/Sidebar';
 import { Text } from '@consta/uikit/Text';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
 import IconFeedback from '##/icons/Feedback.icon.svg';
@@ -29,6 +30,9 @@ const cnMenu = cn('Menu');
 
 export const Menu = (props: Props) => {
   const { isOpen, onClose: onCloseProp } = props;
+  const [path, setPath] = useState<string | undefined>();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     groups,
@@ -36,12 +40,20 @@ export const Menu = (props: Props) => {
     onClose: onCloseModal,
     setModalType,
     clearAutoSave,
-  } = useMenu(onCloseProp);
-  const { clearPreset } = useConstructorPresets();
+  } = useMenu({
+    onClose: onCloseProp,
+    inputRef,
+  });
+  const { clearPreset, onUploadPresetFile } = useConstructorPresets();
 
   const onClose = () => {
     onCloseModal();
     onCloseProp?.();
+  };
+
+  const onUpload: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    onUploadPresetFile(e);
+    onClose();
   };
 
   return (
@@ -51,6 +63,13 @@ export const Menu = (props: Props) => {
       position="left"
       onClickOutside={onClose}
     >
+      <input
+        ref={inputRef}
+        type="file"
+        onChange={onUpload}
+        className={cnMenu('Input')}
+        accept="application/JSON"
+      />
       <div className={cnMenu('Navigation')}>
         <Button
           onlyIcon
@@ -99,24 +118,53 @@ export const Menu = (props: Props) => {
       <div className={cnMenu('Banners')}>
         <BannerButton
           className={cnMixSpace({ mB: 'xs' })}
-          as="a"
           label="Сообщить о проблеме"
-          href="https://github.com/consta-design-system/uikit/issues/new/choose"
-          target="_blank"
+          as="div"
+          onClick={() => {
+            setPath(
+              'https://github.com/consta-design-system/uikit/issues/new/choose',
+            );
+            setModalType('quit');
+          }}
           icon={IconFeedback}
           description="Исправим ошибку, которую вы найдёте"
         />
         <BannerButton
-          as="a"
           label="Telegram"
+          as="div"
           icon={IconTelegram}
-          href="https://t.me/Consta_Chat"
-          target="_blank"
+          onClick={() => {
+            setPath('https://t.me/Consta_Chat');
+            setModalType('quit');
+          }}
         />
       </div>
       <ThemesModal
         isOpen={modalType === 'list' || modalType === 'open'}
         onClose={onClose}
+      />
+      <InfoModal
+        isOpen={modalType === 'quit'}
+        onClose={onClose}
+        title="Покинуть страницу"
+        iconStatus="primary"
+        content="Вы действительно хотите закрыть страницу? Изменения будут утеряны, если их не сохранить."
+        titleIcon={IconQuestion}
+        buttons={[
+          {
+            label: 'Выйти',
+            view: 'primary',
+            onClick: () => {
+              onClose();
+              clearAutoSave();
+              window.open(path, '_blank');
+            },
+          },
+          {
+            label: 'Сохранить текущую тему',
+            onClick: () => setModalType('save'),
+          },
+        ]}
       />
       <InfoModal
         isOpen={modalType === 'new'}

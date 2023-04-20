@@ -1,5 +1,7 @@
+import Color from 'color';
+
 import { ColorBase, ColorKeys, ShadowColors } from '##/types/theme';
-import { hexToHSLA, rgbaToHSLA } from '##/utils/sizes';
+import { convertSizeToNumber } from '##/utils/sizes';
 import {
   colorBaseNames,
   colorGroupsNames,
@@ -10,6 +12,9 @@ import {
 import { getThemeFileName } from '.';
 import { toCapitalize } from './transliter';
 
+const isNotNil = <T>(p: T): p is Exclude<T, undefined | null> =>
+  p !== undefined && p !== null;
+
 export const createColor = (params: {
   color: string;
   h?: number | string;
@@ -17,17 +22,36 @@ export const createColor = (params: {
   l?: number | string;
   a?: number;
 }) => {
-  const { color, h, s, l, a = 100 } = params;
-  const [hue, saturation, lightness] = color.includes('#')
-    ? hexToHSLA(color)
-    : rgbaToHSLA(color);
-  return `hsla(${Math.ceil(
-    typeof h === 'string' ? hue + Number(h) : h ?? hue,
-  )}, ${Math.ceil(
-    typeof s === 'string' ? saturation + Number(s) : s ?? saturation,
-  )}%, ${Math.ceil(
-    typeof l === 'string' ? lightness + Number(l) : l ?? lightness,
-  )}%, ${a / 100})`;
+  const { color: colorStr, h, s, l, a = 100 } = params;
+  let color = Color(colorStr).hsl();
+  if (isNotNil(h)) {
+    const hue = Number(convertSizeToNumber(h, '%'));
+    if (typeof h === 'number' || (!h.includes('+') && !h.includes('-'))) {
+      color = color.hue(hue);
+    } else {
+      color = color.hue(color.hue() + hue);
+    }
+  }
+  if (isNotNil(s)) {
+    const saturation = Number(convertSizeToNumber(s, '%'));
+    if (typeof s === 'number' || (!s.includes('+') && !s.includes('-'))) {
+      color = color.saturationl(saturation);
+    } else {
+      color = color.saturationl(color.saturationl() + saturation);
+    }
+  }
+  if (isNotNil(l)) {
+    const lightness = Number(convertSizeToNumber(l, '%'));
+    if (typeof l === 'number' || (!l.includes('+') && !l.includes('-'))) {
+      color = color.lightness(lightness);
+    } else {
+      color = color.lightness(color.lightness() + lightness);
+    }
+  }
+  if (typeof a === 'number') {
+    color = color.alpha(a / 100);
+  }
+  return color.rgb().string();
 };
 
 export const getCalculatedColorCSS = (

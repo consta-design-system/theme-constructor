@@ -1,6 +1,6 @@
 import './Constructor.css';
 
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { App } from '##/containers/App';
 import { cn } from '##/utils/bem';
@@ -12,14 +12,18 @@ import { ConstructorLeftSide } from './ConstructorLeftSide';
 const cnConstructor = cn('Constructor');
 
 export const Constructor = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   return (
     <App>
       <div className={cnConstructor()}>
         <ConstructorLeftSide />
-        <div className={cnConstructor('RightSide')}>
+        <div ref={containerRef} className={cnConstructor('RightSide')}>
           <div className={cnConstructor('Bg', { type: 'color' })} />
           <div className={cnConstructor('Bg', { type: 'image' })} />
-          <ConstructorExample />
+          <ConstructorExample
+            containerRef={containerRef}
+            className={cnConstructor('Example')}
+          />
           <ConstructorFooter className={cnConstructor('Footer')} />
         </div>
       </div>

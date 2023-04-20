@@ -3,22 +3,30 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
+  max-height: 100vh;
   background-color: var(--color-bg-default);
 
   &-RightSide {
     position: relative;
     display: inline-flex;
+    overflow-y: overlay;
     justify-content: center;
     width: 100%;
     max-width: calc(100vw - var(--constructor-menu-size));
+    max-height: 100vh;
+  }
+
+  &-Example {
+    margin-bottom: 40px;
   }
 
   &-Bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
+    max-height: 100vh;
     pointer-events: none;
 
     &_type {

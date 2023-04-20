@@ -109,7 +109,7 @@ export const useExampleTheme = () => {
     return {
       color: {
         primary: `${presetName}${toCapitalize(type)}`,
-        accent: `${presetName}${toCapitalize(type)}`,
+        accent: `${presetName}${toCapitalize(invertType)}`,
         invert: `${presetName}${toCapitalize(invertType)}`,
       },
       control: presetName,

@@ -8,8 +8,8 @@ import { Grid } from '@consta/uikit/Grid';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { TagBase } from '@consta/uikit/TagBase';
 import { Text } from '@consta/uikit/Text';
-import { withTooltip } from '@consta/uikit/withTooltip';
-import React from 'react';
+import { Tooltip } from '@consta/uikit/Tooltip';
+import React, { useRef } from 'react';
 
 import { cn } from '##/utils/bem';
 
@@ -25,9 +25,7 @@ type Props = {
 export const ConstructorExampleAnalytic = (props: Props) => {
   const { className } = props;
 
-  const TooltipButton = withTooltip({
-    content: 'Настроить дешборд по аналитике',
-  })(Button);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
@@ -35,7 +33,14 @@ export const ConstructorExampleAnalytic = (props: Props) => {
         <Text size="xl" lineHeight="m" weight="semibold">
           Аналитика
         </Text>
-        <TooltipButton size="s" view="ghost" onlyIcon iconLeft={IconSettings} />
+        <Button
+          size="s"
+          view="ghost"
+          onlyIcon
+          iconLeft={IconSettings}
+          ref={buttonRef}
+        />
+        <Tooltip anchorRef={buttonRef}>Настроить дашборд по аналитике</Tooltip>
       </div>
       <Text
         size="s"
@@ -45,7 +50,7 @@ export const ConstructorExampleAnalytic = (props: Props) => {
           cnMixSpace({ mT: 's', mB: 'xl' }),
         ])}
       >
-        Здесь вы можете ознакомиться с аналитикой по установкам петуний
+        Посмотреть аналитику по работе команд.
       </Text>
       <div
         className={cnConstructorExampleAnalytic('Tags', [

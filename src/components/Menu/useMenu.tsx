@@ -15,7 +15,7 @@ type MenuItem = {
   rightSide?: React.ReactNode;
 };
 
-type ModalType = 'new' | 'open' | 'save' | 'download' | 'list';
+type ModalType = 'new' | 'open' | 'save' | 'download' | 'list' | 'quit';
 
 const groupsArr = [
   {
@@ -28,7 +28,13 @@ const groupsArr = [
   },
 ];
 
-export const useMenu = (onClose?: () => void) => {
+type Params = {
+  onClose?: () => void;
+  inputRef?: React.RefObject<HTMLInputElement>;
+};
+
+export const useMenu = (params: Params) => {
+  const { onClose, inputRef } = params;
   const [modalType, setModalType] = useState<ModalType | undefined>();
 
   const { presets, hasChanges, clearPreset } = useConstructorPresets();
@@ -73,6 +79,11 @@ export const useMenu = (onClose?: () => void) => {
         onClick: () => setModalType('download'),
       },
       {
+        label: 'Импортировать тему',
+        groupId: 'constructor',
+        onClick: () => inputRef?.current?.click(),
+      },
+      {
         label: 'Сохранённые темы',
         onClick: () => setModalType('list'),
         rightSide:
@@ -91,7 +102,7 @@ export const useMenu = (onClose?: () => void) => {
         groupId: 'navigation',
       },
     ];
-  }, []);
+  }, [inputRef?.current]);
 
   const groups = getGroups(
     items,

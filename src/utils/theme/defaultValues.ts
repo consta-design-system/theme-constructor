@@ -1,33 +1,33 @@
 import { ColorBase, ShadowColors, ShadowParams } from '##/types/theme';
 
 export const defaultLightColors: ColorBase = {
-  '$color-base-base': '#002033',
-  '$color-base-essential': '#ffffff',
-  '$color-base-project': '#0071b2',
-  '$color-base-phantom': '#004269',
-  '$color-base-path': '#0078d2',
-  '$color-base-system': '#ced8de',
-  '$color-base-success': '#22c38e',
-  '$color-base-alert': '#eb5757',
-  '$color-base-warning': '#f38b00',
-  '$color-base-caution': '#f2c94c',
-  '$color-base-normal': '#56b9f2',
-  '$color-base-critical': '#33000f',
+  '$color-base-base': 'rgba(0, 32, 51, 1)',
+  '$color-base-essential': 'rgba(255, 255, 255, 1)',
+  '$color-base-project': 'rgba(0, 113, 178, 1)',
+  '$color-base-phantom': 'rgba(0, 66, 105, 1)',
+  '$color-base-path': 'rgba(0, 120, 210, 1)',
+  '$color-base-system': 'rgba(206, 216, 222, 1)',
+  '$color-base-success': 'rgba(34, 195, 142, 1)',
+  '$color-base-alert': 'rgba(235, 87, 87, 1)',
+  '$color-base-warning': 'rgba(243, 139, 0, 1)',
+  '$color-base-caution': 'rgba(242, 201, 76, 1)',
+  '$color-base-normal': 'rgba(86, 185, 242, 1)',
+  '$color-base-critical': 'rgba(51, 0, 15, 1)',
 };
 
 export const defaultDarkColors: ColorBase = {
-  '$color-base-base': '#ffffff',
-  '$color-base-essential': '#22272b',
-  '$color-base-project': '#0071b2',
-  '$color-base-phantom': '#f6fbfd',
-  '$color-base-path': '#0078d2',
-  '$color-base-system': '#4b5963',
-  '$color-base-success': '#22c38e',
-  '$color-base-alert': '#f54d4d',
-  '$color-base-warning': '#f38b00',
-  '$color-base-caution': '#f2c94c',
-  '$color-base-normal': '#0aa5ff',
-  '$color-base-critical': '#33000f',
+  '$color-base-base': 'rgba(255, 255, 255, 1)',
+  '$color-base-essential': 'rgba(34, 39, 43, 1)',
+  '$color-base-project': 'rgba(0, 113, 178, 1)',
+  '$color-base-phantom': 'rgba(246, 251, 253, 1)',
+  '$color-base-path': 'rgba(0, 120, 210, 1)',
+  '$color-base-system': 'rgba(75, 89, 99, 1)',
+  '$color-base-success': 'rgba(34, 195, 142, 1)',
+  '$color-base-alert': 'rgba(245, 77, 77, 1)',
+  '$color-base-warning': 'rgba(243, 139, 0, 1)',
+  '$color-base-caution': 'rgba(242, 201, 76, 1)',
+  '$color-base-normal': 'rgba(10, 165, 255, 1)',
+  '$color-base-critical': 'rgba(51, 0, 15, 1)',
 };
 
 export const defaultLineHeight: number = 0;
@@ -46,9 +46,9 @@ export const defaultShadowDarkColors: ShadowColors = {
 };
 
 export const defaultShadowLightColors: ShadowColors = {
-  '--shadow-group': ['rgba(0, 14, 21, 0.02)', 'rgba(0, 14, 21, 0.16)'],
-  '--shadow-layer': ['rgba(0, 14, 21, 0.04)', 'rgba(0, 14, 21, 0.12)'],
-  '--shadow-modal': ['rgba(0, 14, 21, 0.04)', 'rgba(0, 14, 21, 0.12)'],
+  '--shadow-group': ['rgba(0, 32, 51, 0.02)', 'rgba(0, 32, 51, 0.16)'],
+  '--shadow-layer': ['rgba(0, 32, 51, 0.04)', 'rgba(0, 32, 51, 0.12)'],
+  '--shadow-modal': ['rgba(0, 32, 51, 0.04)', 'rgba(0, 32, 51, 0.12)'],
 };
 
 export const defaultShadowParams: Record<keyof ShadowColors, ShadowParams> = {

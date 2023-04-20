@@ -10,6 +10,10 @@
     width: 100%;
   }
 
+  &-Input {
+    display: none;
+  }
+
   &-List {
     display: flex;
     flex-direction: column;

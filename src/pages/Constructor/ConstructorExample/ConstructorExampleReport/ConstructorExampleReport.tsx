@@ -37,7 +37,7 @@ export const ConstructorExampleReport = (props: Props) => {
         lineHeight="m"
         view="secondary"
       >
-        Здесь вы можете добавить отчёт о петуниизации за установленный период
+        Здесь вы можете добавить отчёт о работе команд за установленный период
       </Text>
       <DragNDropField
         onDropFiles={() => {}}
