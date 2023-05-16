@@ -1,7 +1,7 @@
 import './ConstructorVarsRadius.css';
 
 import { TextField, useIMask } from '@consta/uikit/TextField';
-import { useAction, useAtom } from '@reatom/npm-react';
+import { useAtom } from '@reatom/npm-react';
 import React, { useState } from 'react';
 
 import { VarField } from '##/components/VarField';
@@ -12,11 +12,9 @@ import { convertSizeToNumber } from '##/utils/sizes';
 const cnConstructorVarsRadius = cn('ConstructorVarsRadius');
 
 export const ConstructorVarsRadius = () => {
-  const [radius] = useAtom(radiusAtom);
+  const [radius, setRadius] = useAtom(radiusAtom);
 
   const [value, setValue] = useState<string | null>(`${radius}px`);
-
-  const setRadius = useAction((ctx, value: number) => radiusAtom(ctx, value));
 
   const handleChange = (value: string | null) => {
     setRadius(value ? convertSizeToNumber(value, 'px') : 4);

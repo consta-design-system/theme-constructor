@@ -1,9 +1,5 @@
 import { DeepPartial } from '##/types/DeepPartial';
-import {
-  ConstructorThemePreset,
-  ShadowColors,
-  ShadowParams,
-} from '##/types/theme';
+import { ConstructorThemePreset, ShadowsOptions } from '##/types/theme';
 
 import {
   defaultDarkColors,
@@ -18,7 +14,7 @@ import {
   defaultTextSize,
 } from './defaultValues';
 
-const getUnionObject = <TYPE extends Record<string, unknown>>(
+export const getUnionObject = <TYPE extends Record<string, unknown>>(
   obj: DeepPartial<TYPE> | undefined,
   defaultObj: TYPE,
 ): TYPE => {
@@ -65,7 +61,7 @@ export const getPresetFromAutoSave = (
           defaultShadowDarkColors,
         ),
       },
-      params: getUnionObject<Record<keyof ShadowColors, ShadowParams>>(
+      params: getUnionObject<ShadowsOptions>(
         theme.shadow?.params,
         defaultShadowParams,
       ),

@@ -14,3 +14,5 @@ export const varsTypeAtom = atom<VarsType>('color');
 onUpdate(isHelpAtom, (_ctx, value) => {
   localStorage.setItem(HELP_FLAG_KEY, value?.toString());
 });
+
+export const scenarioModalAtom = atom(true);

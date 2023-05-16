@@ -4,9 +4,8 @@ import { useAction } from '@reatom/npm-react';
 import React, { useMemo, useState } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
-import { autoSavePresetAtom } from '##/modules/presets';
-import { DeepPartial } from '##/types/DeepPartial';
-import { ConstructorThemePreset } from '##/types/theme';
+import { onSetPresetValue } from '##/modules/presets';
+import { defaultPresetValue } from '##/utils/theme/defaultValues';
 
 type MenuItem = {
   label: string;
@@ -39,13 +38,10 @@ export const useMenu = (params: Params) => {
 
   const { presets, hasChanges, clearPreset } = useConstructorPresets();
 
-  const setAutoSavePreset = useAction(
-    (ctx, value: DeepPartial<ConstructorThemePreset> | null) =>
-      autoSavePresetAtom(ctx, value),
-  );
+  const setPresetValue = useAction(onSetPresetValue);
 
   const clearAutoSave = () => {
-    setAutoSavePreset(null);
+    setPresetValue(defaultPresetValue);
   };
 
   const items: MenuItem[] = useMemo(() => {

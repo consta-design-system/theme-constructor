@@ -99,6 +99,17 @@ export const rgbaMask = {
   },
 };
 
+export const rgbMask = {
+  mask: 'rgb(RGB, RGB, RGB)',
+  blocks: {
+    RGB: {
+      mask: Number,
+      min: 0,
+      max: 255,
+    },
+  },
+};
+
 export const hslaMask = {
   mask: 'hsla(RAD, PERC%,PERC%, ALPHA)',
   blocks: {
@@ -125,3 +136,11 @@ export const hslaMask = {
     },
   },
 };
+
+export const hexRegex = /^#([A-Fa-f0-9]{6})$/;
+export const rgbaRegex =
+  /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/;
+export const rgbRegex =
+  /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
+export const hslaRegex =
+  /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/;

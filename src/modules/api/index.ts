@@ -1,3 +1,1 @@
-import { createCtx } from '@reatom/core';
-
-export const ctx = createCtx();
+export { ctx } from '@consta/stand/src/modules/app/index';

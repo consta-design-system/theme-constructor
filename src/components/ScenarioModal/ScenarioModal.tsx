@@ -9,7 +9,7 @@ import React, { useMemo } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
 import IconConsta from '##/icons/Consta.icon.svg';
-import { autoSaveAtom } from '##/modules/presets';
+import { autoSavePresetAtom } from '##/modules/autosave';
 import { cn } from '##/utils/bem';
 
 import { ThemesModal } from '../ThemesModal';
@@ -28,7 +28,7 @@ export const ScenarioModal = (props: Props) => {
 
   const { presets, clearPreset, onOpenAutoSave } = useConstructorPresets();
   const [showListModal, setShowListModal] = useFlag();
-  const [autoSave] = useAtom(autoSaveAtom);
+  const [autoSave] = useAtom(autoSavePresetAtom);
 
   const items = useMemo(() => {
     return [

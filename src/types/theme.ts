@@ -49,6 +49,8 @@ export type ShadowColors = {
   '--shadow-modal': [string, string];
 };
 
+export type ShadowsOptions = Record<keyof ShadowColors, ShadowParams>;
+
 export type ColorBase = {
   '$color-base-base': string;
   '$color-base-essential': string;
@@ -85,7 +87,7 @@ export type ConstructorThemePreset = {
         light: ShadowColors;
         dark: ShadowColors;
       };
-      params: Record<keyof ShadowColors, ShadowParams>;
+      params: ShadowsOptions;
     };
   };
 };

@@ -1,3 +1,5 @@
+import Color from 'color';
+
 import { ColorBase, ColorKeys } from '##/types/theme';
 
 export const getColors = (
@@ -440,4 +442,13 @@ export const colorBaseNames: ColorBase = {
   '$color-base-caution': 'Цвет осторожности',
   '$color-base-normal': 'Цвет нейтральный',
   '$color-base-critical': 'Цвет системнный',
+};
+
+export const createColor = (
+  color: string,
+  opacity: [number, number],
+): [string, string] => {
+  const c1 = Color(color).rgb().alpha(opacity[0]).string();
+  const c2 = Color(color).rgb().alpha(opacity[1]).string();
+  return [c1, c2];
 };
