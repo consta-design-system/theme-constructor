@@ -48,7 +48,9 @@ export const ConstructorExample: React.FC<{
 
   return (
     <>
-      <style>{css}</style>
+      {css.map((styles, index) => (
+        <style key={cnConstructorExample('Style', { index })}>{styles}</style>
+      ))}
       <Theme
         ref={ref}
         preset={preset}

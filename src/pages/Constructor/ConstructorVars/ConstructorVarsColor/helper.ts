@@ -50,6 +50,7 @@ export const colorGroups = [
 
 export const hexMask = {
   mask: '{#}HEXHEXHEXHEXHEXHEX',
+  placeholderChar: '#',
   blocks: {
     HEX: {
       mask: IMask.MaskedEnum,
@@ -83,10 +84,12 @@ export const hexMask = {
 
 export const rgbaMask = {
   mask: 'rgba(RGB, RGB, RGB, ALPHA)',
+  placeholderChar: 'rgba(',
   blocks: {
     RGB: {
       mask: Number,
       min: 0,
+      scale: 0,
       max: 255,
     },
     ALPHA: {
@@ -101,6 +104,7 @@ export const rgbaMask = {
 
 export const rgbMask = {
   mask: 'rgb(RGB, RGB, RGB)',
+  placeholderChar: 'rgb(',
   blocks: {
     RGB: {
       mask: Number,
@@ -111,21 +115,20 @@ export const rgbMask = {
 };
 
 export const hslaMask = {
-  mask: 'hsla(RAD, PERC%,PERC%, ALPHA)',
+  mask: 'hsla(RAD, PERC%, PERC%, ALPHA)',
+  placeholderChar: 'hsla(',
   blocks: {
     RAD: {
       mask: Number,
       min: 0,
+      scale: 0,
       max: 360,
-      radix: '.',
-      mapToRadix: ['.'],
     },
     PERC: {
       mask: Number,
       min: 0,
       max: 100,
-      radix: '.',
-      mapToRadix: ['.'],
+      scale: 3,
     },
     ALPHA: {
       mask: Number,

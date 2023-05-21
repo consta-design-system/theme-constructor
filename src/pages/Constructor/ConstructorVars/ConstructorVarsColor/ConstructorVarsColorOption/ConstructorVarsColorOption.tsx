@@ -6,6 +6,7 @@ import { useTheme } from '@consta/uikit/Theme';
 import { useDebounce } from '@consta/uikit/useDebounce';
 import { useAtom } from '@reatom/npm-react';
 import Color from 'color';
+import IMask from 'imask';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { ColorExample } from '##/components/ColorExample';
@@ -13,7 +14,7 @@ import { VarField } from '##/components/VarField';
 import { VarFieldList } from '##/components/VarField/VarFieldList';
 import { ColorFabricResponse } from '##/modules/colors/helpers';
 import { cn } from '##/utils/bem';
-import { hslToHslaStr, rgbToRgbaStr } from '##/utils/sizes';
+import { createFixedHsl, hslToHslaStr, rgbToRgbaStr } from '##/utils/sizes';
 
 import {
   hexMask,
@@ -45,7 +46,7 @@ type ColorsVariants = {
 const convertColor = (str: string): ColorsVariants => {
   const color = Color(str).alpha(Color(str).object().alpha ?? 1);
   return {
-    hsla: hslToHslaStr(color.hsl().string()),
+    hsla: hslToHslaStr(createFixedHsl(color).hsl().string()),
     rgba: rgbToRgbaStr(color.rgb().string()),
     hex: color.hex(),
   };
@@ -77,7 +78,7 @@ export const ConstructorVarsColorOption = (props: Props) => {
   const handleRgbaChange = (value: string | null) => {
     setRgba(value);
     if (value && rgbaRegex.test(value)) {
-      setBaseColor(value);
+      setBaseColor(IMask.pipe(value, rgbaMask));
     }
   };
 

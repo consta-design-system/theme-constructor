@@ -24,3 +24,10 @@ export const rgbToRgbaStr = (str: string, opacity?: number) => {
 
   return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity ?? 1})`;
 };
+
+export const createFixedHsl = (color: Color) => {
+  return color
+    .hue(Number(color.hue().toFixed(0)))
+    .lightness(Number(color.lightness().toFixed(0)))
+    .saturationl(Number(color.saturationl().toFixed(0)));
+};

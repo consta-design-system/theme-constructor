@@ -2,7 +2,7 @@ import { atom, AtomMut } from '@reatom/core';
 import { onUpdate } from '@reatom/hooks';
 import Color from 'color';
 
-import { hslToHslaStr, rgbToRgbaStr } from '##/utils/sizes';
+import { createFixedHsl, hslToHslaStr, rgbToRgbaStr } from '##/utils/sizes';
 
 import { atomWithCalledAction } from '../autosave/helper';
 
@@ -19,7 +19,7 @@ export const createColorPropAtoms = (initial: string): ColorFabricResponse => {
   const inputHexAtom = atom<string | null>(color.hex());
   const inputRgbaAtom = atom<string | null>(rgba);
   const inputHslaAtom = atom<string | null>(
-    hslToHslaStr(color.hsl().string(), color.alpha()),
+    hslToHslaStr(createFixedHsl(color).hsl().string(), color.alpha()),
   );
   const inputBaseAtom = atomWithCalledAction<string>(rgba);
 
@@ -27,7 +27,10 @@ export const createColorPropAtoms = (initial: string): ColorFabricResponse => {
     const newColor = Color(value);
     inputHexAtom(ctx, newColor.hex());
     inputRgbaAtom(ctx, rgbToRgbaStr(newColor.rgb().string(), newColor.alpha()));
-    inputHslaAtom(ctx, hslToHslaStr(newColor.hsl().string(), newColor.alpha()));
+    inputHslaAtom(
+      ctx,
+      hslToHslaStr(createFixedHsl(newColor).hsl().string(), newColor.alpha()),
+    );
   });
 
   return [inputHexAtom, inputRgbaAtom, inputHslaAtom, inputBaseAtom];
