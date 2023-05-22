@@ -39,4 +39,3 @@ export const darkColorsAtom: Atom<ColorBase> = atom((ctx) => {
   });
   return colors as ColorBase;
 });
-

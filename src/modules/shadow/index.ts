@@ -62,4 +62,3 @@ export const shadowParamsAtom: Atom<ShadowsOptions> = atom((ctx) => {
   });
   return colors as ShadowsOptions;
 });
-

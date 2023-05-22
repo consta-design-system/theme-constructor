@@ -12,4 +12,3 @@ export const lineHeightTermAtom =
   atomWithCalledAction<number>(defaultLineHeight);
 
 export const fontAtom = atomWithCalledAction<string>(defaultFont);
-

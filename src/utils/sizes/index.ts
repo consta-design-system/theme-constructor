@@ -23,6 +23,7 @@ export const rgbToRgbaStr = (str: string, opacity?: number) => {
   const color = Color(str).rgb().array();
 
   return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity ?? 1})`;
+};
 
 export const createFixedHsl = (color: Color) => {
   return color
