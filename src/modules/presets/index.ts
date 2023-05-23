@@ -82,7 +82,7 @@ export const onSetPresetValue = action(
       atoms[3](ctx, color ?? defaultLightColors[name]);
     });
     darkColorFabricAtoms.forEach(({ name, atoms }) => {
-      const color = value?.colors?.light?.[name];
+      const color = value?.colors?.dark?.[name];
       atoms[3](ctx, color ?? defaultDarkColors[name]);
     });
   },
