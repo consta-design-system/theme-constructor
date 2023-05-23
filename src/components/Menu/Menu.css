@@ -44,6 +44,7 @@
     background: transparent;
     border: none;
     border-radius: var(--control-radius);
+    text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s;
 

@@ -3,7 +3,7 @@ import './ConstructorVarsFont.css';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Select } from '@consta/uikit/Select';
 import { TextField, useIMask } from '@consta/uikit/TextField';
-import { useAction, useAtom } from '@reatom/npm-react';
+import { useAtom } from '@reatom/npm-react';
 import React, { useMemo, useState } from 'react';
 
 import { TextExample } from '##/components/TextExample';
@@ -39,23 +39,15 @@ const groups = [
 const cnConstructorVarsFont = cn('ConstructorVarsFont');
 
 export const ConstructorVarsFont = () => {
-  const [textSize] = useAtom(textSizeTermAtom);
-  const [lineHeight] = useAtom(lineHeightTermAtom);
-  const [font] = useAtom(fontAtom);
+  const [textSize, setTextSize] = useAtom(textSizeTermAtom);
+  const [lineHeight, setLineHeight] = useAtom(lineHeightTermAtom);
+  const [font, setFont] = useAtom(fontAtom);
 
   const [size, setSize] = useState<string | null>(
     textSize ? `${textSize}px` : '0px',
   );
   const [height, setHeight] = useState<string | null>(
     lineHeight ? `${lineHeight}em` : '0.0em',
-  );
-
-  const setFont = useAction((ctx, value: string) => fontAtom(ctx, value));
-  const setTextSize = useAction((ctx, value: number) =>
-    textSizeTermAtom(ctx, value),
-  );
-  const setLineHeight = useAction((ctx, value: number) =>
-    lineHeightTermAtom(ctx, value),
   );
 
   const handleChangeSize = (value: string | null) => {

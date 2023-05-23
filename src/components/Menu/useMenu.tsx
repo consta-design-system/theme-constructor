@@ -1,17 +1,18 @@
+import { useLink } from '@consta/stand/src/hooks/useLink';
 import { getGroups } from '@consta/uikit/__internal__/src/utils/getGroups';
 import { Text } from '@consta/uikit/Text';
 import { useAction } from '@reatom/npm-react';
 import React, { useMemo, useState } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
-import { autoSavePresetAtom } from '##/modules/presets';
-import { DeepPartial } from '##/types/DeepPartial';
-import { ConstructorThemePreset } from '##/types/theme';
+import { onSetPresetValue } from '##/modules/presets';
+import { defaultPresetValue } from '##/utils/theme/defaultValues';
 
 type MenuItem = {
   label: string;
   onClick?: React.MouseEventHandler;
   groupId?: string;
+  href?: string;
   rightSide?: React.ReactNode;
 };
 
@@ -39,13 +40,12 @@ export const useMenu = (params: Params) => {
 
   const { presets, hasChanges, clearPreset } = useConstructorPresets();
 
-  const setAutoSavePreset = useAction(
-    (ctx, value: DeepPartial<ConstructorThemePreset> | null) =>
-      autoSavePresetAtom(ctx, value),
-  );
+  const setPresetValue = useAction(onSetPresetValue);
+
+  const [href, onClick] = useLink({ to: 'HOME' });
 
   const clearAutoSave = () => {
-    setAutoSavePreset(null);
+    setPresetValue(defaultPresetValue);
   };
 
   const items: MenuItem[] = useMemo(() => {
@@ -96,11 +96,13 @@ export const useMenu = (params: Params) => {
       {
         label: 'Портал Consta',
         groupId: 'navigation',
+        onClick,
+        href,
       },
-      {
-        label: 'Гайд по конструктору',
-        groupId: 'navigation',
-      },
+      // {
+      //   label: 'Гайд по конструктору',
+      //   groupId: 'navigation',
+      // },
     ];
   }, [inputRef?.current]);
 

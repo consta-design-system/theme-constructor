@@ -4,7 +4,7 @@ import { ChoiceGroup } from '@consta/uikit/ChoiceGroup';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Switch } from '@consta/uikit/Switch';
 import { Text } from '@consta/uikit/Text';
-import { useAction, useAtom } from '@reatom/npm-react';
+import { useAtom } from '@reatom/npm-react';
 import React, { useMemo } from 'react';
 
 import { isHelpAtom, varsTypeAtom } from '##/modules/app';
@@ -26,14 +26,8 @@ const varsNameMap: Record<VarsType, string> = {
 export const ConstructorVarsSelector: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const [isHelp] = useAtom(isHelpAtom);
-  const [activeVar] = useAtom(varsTypeAtom);
-
-  const setActiveVar = useAction((ctx, value: VarsType) =>
-    varsTypeAtom(ctx, value),
-  );
-
-  const setIsHelp = useAction((ctx, value: boolean) => isHelpAtom(ctx, value));
+  const [isHelp, setIsHelp] = useAtom(isHelpAtom);
+  const [activeVar, setActiveVar] = useAtom(varsTypeAtom);
 
   const title = useMemo(() => {
     return `Настройка ${varsNameMap[activeVar]}`;

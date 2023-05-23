@@ -1,27 +1,5 @@
-import { atom } from '@reatom/core';
-import { onUpdate } from '@reatom/hooks';
+import { defaultSpace } from '##/utils/theme/defaultValues';
 
-import {
-  defaultAutoSaveName,
-  defaultSpace,
-} from '##/utils/theme/defaultValues';
+import { atomWithCalledAction } from '../autosave/helper';
 
-import { autoSavePresetAtom } from '../presets';
-
-export const spaceFactorAtom = atom<number>(defaultSpace);
-
-onUpdate(spaceFactorAtom, (ctx, value) => {
-  if (value !== defaultSpace) {
-    const preset = ctx.get(autoSavePresetAtom);
-    const date = new Date().toISOString();
-    autoSavePresetAtom(ctx, {
-      name: preset?.name ?? defaultAutoSaveName,
-      createdAt: preset?.createdAt ?? date,
-      modifiedAt: date,
-      theme: {
-        ...(preset?.theme ?? {}),
-        space: value,
-      },
-    });
-  }
-});
+export const spaceFactorAtom = atomWithCalledAction<number>(defaultSpace);

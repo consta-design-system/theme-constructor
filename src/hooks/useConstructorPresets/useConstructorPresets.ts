@@ -2,45 +2,30 @@ import { SnackBarItemStatus } from '@consta/uikit/SnackBar';
 import { useAction, useAtom } from '@reatom/npm-react';
 import React, { useMemo } from 'react';
 
-import { colorDarkAtom, colorLightAtom } from '##/modules/colors';
+import { autoSavePresetAtom } from '##/modules/autosave';
+import { darkColorsAtom, lightColorsAtom } from '##/modules/colors';
 import {
   fontAtom,
   lineHeightTermAtom,
   textSizeTermAtom,
 } from '##/modules/font';
-import { Message, messagesAtom } from '##/modules/messages';
+import { messagesAtom } from '##/modules/messages';
 import {
-  autoSavePresetAtom,
   currentPresetAtom,
+  onSetPresetValue,
   presetsAtom,
 } from '##/modules/presets';
 import { radiusAtom } from '##/modules/radius';
 import {
   shadowDarkColorsAtom,
   shadowLightColorsAtom,
-  shadowOptionsAtom,
+  shadowParamsAtom,
 } from '##/modules/shadow';
 import { spaceFactorAtom } from '##/modules/space';
 import { DeepPartial } from '##/types/DeepPartial';
-import {
-  ColorBase,
-  ConstructorThemePreset,
-  ShadowColors,
-  ShadowParams,
-} from '##/types/theme';
+import { ConstructorThemePreset } from '##/types/theme';
 import { presetsCompare } from '##/utils/theme/comparator';
-import {
-  defaultDarkColors,
-  defaultFont,
-  defaultLightColors,
-  defaultLineHeight,
-  defaultRadius,
-  defaultShadowDarkColors,
-  defaultShadowLightColors,
-  defaultShadowParams,
-  defaultSpace,
-  defaultTextSize,
-} from '##/utils/theme/defaultValues';
+import { defaultPresetValue } from '##/utils/theme/defaultValues';
 import { getPresetFromAutoSave } from '##/utils/theme/getPresetFromAutoSave';
 import { generateUUID } from '##/utils/uuid';
 
@@ -51,68 +36,22 @@ export const useConstructorPresets = () => {
   const [font] = useAtom(fontAtom);
   const [size] = useAtom(textSizeTermAtom);
   const [lineHeight] = useAtom(lineHeightTermAtom);
-  const [lightColors] = useAtom(colorLightAtom);
-  const [darkColors] = useAtom(colorDarkAtom);
+  const [lightColors] = useAtom(lightColorsAtom);
+  const [darkColors] = useAtom(darkColorsAtom);
   const [lightShadowColors] = useAtom(shadowLightColorsAtom);
   const [darkShadowColors] = useAtom(shadowDarkColorsAtom);
-  const [shadowOptions] = useAtom(shadowOptionsAtom);
-
-  // Setters
-
-  const setRadius = useAction((ctx, value: number) => radiusAtom(ctx, value));
-  const setSpace = useAction((ctx, value: number) =>
-    spaceFactorAtom(ctx, value),
-  );
-  const setFont = useAction((ctx, value: string) => fontAtom(ctx, value));
-  const setSize = useAction((ctx, value: number) =>
-    textSizeTermAtom(ctx, value),
-  );
-  const setLineHeigt = useAction((ctx, value: number) =>
-    lineHeightTermAtom(ctx, value),
-  );
-  const setLightColors = useAction((ctx, value: ColorBase) =>
-    colorLightAtom(ctx, value),
-  );
-  const setDarkColors = useAction((ctx, value: ColorBase) =>
-    colorDarkAtom(ctx, value),
-  );
-  const setLightShadowColors = useAction((ctx, value: ShadowColors) =>
-    shadowLightColorsAtom(ctx, value),
-  );
-  const setDarkShadowColors = useAction((ctx, value: ShadowColors) =>
-    shadowDarkColorsAtom(ctx, value),
-  );
-  const setShadowOptions = useAction(
-    (ctx, value: Record<keyof ShadowColors, ShadowParams>) =>
-      shadowOptionsAtom(ctx, value),
-  );
+  const [shadowOptions] = useAtom(shadowParamsAtom);
 
   // Presets
-  const [presets] = useAtom(presetsAtom);
-  const [currentPresset] = useAtom(currentPresetAtom);
+  const [presets, setPresets] = useAtom(presetsAtom);
+  const [currentPresset, setCurrentPreset] = useAtom(currentPresetAtom);
   const [autoSave] = useAtom(autoSavePresetAtom);
 
-  const setPresets = useAction((ctx, value: ConstructorThemePreset[]) =>
-    presetsAtom(ctx, value),
-  );
-
-  const setCurrentPreset = useAction(
-    (ctx, value: ConstructorThemePreset | null) =>
-      currentPresetAtom(ctx, value),
-  );
-
-  const setAutoSavePreset = useAction(
-    (ctx, value: DeepPartial<ConstructorThemePreset> | null) =>
-      autoSavePresetAtom(ctx, value),
-  );
+  const setPresetValue = useAction(onSetPresetValue);
 
   // Messages
 
-  const [messages] = useAtom(messagesAtom);
-
-  const setMessages = useAction((ctx, value: Message[]) =>
-    messagesAtom(ctx, value),
-  );
+  const [messages, setMessages] = useAtom(messagesAtom);
 
   const createMessage = (
     title: string,
@@ -173,16 +112,7 @@ export const useConstructorPresets = () => {
           const { theme } = JSON.parse(
             result?.toString(),
           ) as ConstructorThemePreset;
-          setRadius(theme.radius);
-          setSpace(theme.space);
-          setFont(theme.font.font);
-          setSize(theme.font.size);
-          setLineHeigt(theme.font.lineHeight);
-          setDarkColors(theme.colors.dark);
-          setLightColors(theme.colors.light);
-          setShadowOptions(theme.shadow.params);
-          setDarkShadowColors(theme.shadow.colors.dark);
-          setLightShadowColors(theme.shadow.colors.light);
+          setPresetValue(theme);
         } catch {
           createMessage(
             'Ошибка загрузки',
@@ -224,18 +154,7 @@ export const useConstructorPresets = () => {
   ]);
 
   const onOpenAutoSave = (preset: DeepPartial<ConstructorThemePreset>) => {
-    const { colors, shadow, space, radius, font } =
-      getPresetFromAutoSave(preset);
-    setRadius(radius);
-    setSpace(space);
-    setFont(font.font);
-    setSize(font.size);
-    setLineHeigt(font.lineHeight);
-    setDarkColors(colors.dark);
-    setLightColors(colors.light);
-    setShadowOptions(shadow.params);
-    setDarkShadowColors(shadow.colors.dark);
-    setLightShadowColors(shadow.colors.light);
+    setPresetValue(getPresetFromAutoSave(preset));
   };
 
   const onSave = (type: 'new' | 'old', name: string) => {
@@ -243,8 +162,8 @@ export const useConstructorPresets = () => {
     const preset = constructThemeData(name, oldVersion ?? undefined);
     const arr = [...presets.filter((el) => el.name !== name), preset];
     setPresets(arr);
-    setAutoSavePreset(null);
     if (preset) {
+      setCurrentPreset(preset);
       createMessage(
         'Тема успешно сохранена',
         'Теперь можно в любой момент открыть её и продолжить работу. Даже, если закроете вкладку.',
@@ -260,16 +179,7 @@ export const useConstructorPresets = () => {
   };
 
   const clearPreset = () => {
-    setRadius(defaultRadius);
-    setSpace(defaultSpace);
-    setFont(defaultFont);
-    setSize(defaultTextSize);
-    setLineHeigt(defaultLineHeight);
-    setDarkColors(defaultDarkColors);
-    setLightColors(defaultLightColors);
-    setShadowOptions(defaultShadowParams);
-    setDarkShadowColors(defaultShadowDarkColors);
-    setLightShadowColors(defaultShadowLightColors);
+    setPresetValue(defaultPresetValue);
     setCurrentPreset(null);
   };
 
@@ -281,28 +191,7 @@ export const useConstructorPresets = () => {
   };
 
   const onOpen = (preset: ConstructorThemePreset) => {
-    const {
-      theme: {
-        colors: { light, dark },
-        font: { font, size, lineHeight },
-        space,
-        shadow: {
-          colors: { light: lightShadow, dark: darkShadow },
-          params,
-        },
-        radius,
-      },
-    } = preset;
-    setRadius(radius);
-    setSpace(space);
-    setFont(font);
-    setSize(size);
-    setLineHeigt(lineHeight);
-    setDarkColors(dark);
-    setLightColors(light);
-    setShadowOptions(params);
-    setDarkShadowColors(darkShadow);
-    setLightShadowColors(lightShadow);
+    setPresetValue(preset.theme);
     setCurrentPreset(preset);
   };
 

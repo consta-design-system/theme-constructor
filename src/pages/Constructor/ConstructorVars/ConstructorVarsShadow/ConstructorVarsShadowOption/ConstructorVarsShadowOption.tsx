@@ -1,33 +1,64 @@
 import './ConstructorVarsShadowOption.css';
 
 import { TextField, useIMask } from '@consta/uikit/TextField';
-import Color from 'color';
-import IMask from 'imask';
-import React, { useMemo, useState } from 'react';
+import { useAtom } from '@reatom/npm-react';
+import React, { useMemo } from 'react';
 
 import { ShadowExample } from '##/components/ShadowExample';
 import { VarField } from '##/components/VarField';
+import {
+  ShadowColorFabricResponse,
+  ShadowParamsFabricResponse,
+} from '##/modules/shadow/helper';
 import { ShadowParams } from '##/types/theme';
 import { cn } from '##/utils/bem';
 import { convertSizeToNumber } from '##/utils/sizes';
+import { createColor } from '##/utils/theme/colors';
 
+import {
+  hexMask,
+  hexRegex,
+  rgbMask,
+  rgbRegex,
+} from '../../ConstructorVarsColor/helper';
 import { ConstructorVarsShadowParametrs } from '../ConstructorVarsShadowParametrs';
-import { createColor, createShadow, percentToFloat } from './helper';
+import { createShadow, percentToFloat } from './helper';
 
 type Props = {
   title: string;
   description?: string;
-  colors: [string, string];
-  params: ShadowParams;
-  onChangeParams: (value: ShadowParams) => void;
-  onChangeColor: (value: [string, string]) => void;
+  colorAtoms: ShadowColorFabricResponse;
+  defaultHexColor: string;
+  paramsAtoms: ShadowParamsFabricResponse;
 };
 
 const cnConstructorVarsShadowOption = cn('ConstructorVarsShadowOption');
 
 export const ConstructorVarsShadowOption = (props: Props) => {
-  const { title, description, colors, params, onChangeColor, onChangeParams } =
+  const { title, description, colorAtoms, paramsAtoms, defaultHexColor } =
     props;
+
+  // COLORS
+  const [hexAtom, rgbAtom, alpha1Atom, alpha2Atom, baseAtom] = colorAtoms;
+
+  const [hex, setHex] = useAtom(hexAtom);
+  const [rgb, setRgb] = useAtom(rgbAtom);
+  const [alpha1, setAlpha1] = useAtom(alpha1Atom);
+  const [alpha2, setAlpha2] = useAtom(alpha2Atom);
+  const [baseColor, setBaseColor] = useAtom(baseAtom);
+
+  // PARAMS
+
+  const [x1Atom, x2Atom, y1Atom, y2Atom, blur1Atom, blur2Atom, paramsAtom] =
+    paramsAtoms;
+
+  const [x1, setX1] = useAtom(x1Atom);
+  const [x2, setX2] = useAtom(x2Atom);
+  const [y1, setY1] = useAtom(y1Atom);
+  const [y2, setY2] = useAtom(y2Atom);
+  const [blur1, setBlur1] = useAtom(blur1Atom);
+  const [blur2, setBlur2] = useAtom(blur2Atom);
+  const [params, setParams] = useAtom(paramsAtom);
 
   const maskPx = {
     mask: 'NUMpx',
@@ -49,103 +80,95 @@ export const ConstructorVarsShadowOption = (props: Props) => {
     },
   };
 
-  const [c1, c2, o1, o2] = useMemo(() => {
-    const color = Color(colors[0]);
-    const rgb = color.rgb();
-    const hex = color.hex();
-    return [rgb.alpha(1).string(), hex, color.alpha(), color.alpha()];
-  }, [colors[0], colors[1]]);
-
-  const [rgb, setRgb] = useState<string | null>(c1);
-  const [hex, setHex] = useState<string | null>(c2);
-
-  const handleColorChange = (value: string | null, type: 'rgb' | 'hex') => {
-    const color = Color(value ?? '#000');
-    (type === 'hex' ? setHex : setRgb)(value);
-    if (type === 'rgb') {
-      setRgb(value);
-      setHex(color.hex());
-    } else {
-      setHex(value);
-      setRgb(color.rgb().string());
+  const handleHexChange = (value: string | null) => {
+    setHex(value);
+    if (value && hexRegex.test(value)) {
+      setBaseColor(
+        createColor(value ?? defaultHexColor, [alpha1 ?? 1, alpha2 ?? 1]),
+      );
     }
-    onChangeColor(createColor(color.hex(), [o1, o2]));
+  };
+
+  const handleRgbChange = (value: string | null) => {
+    setRgb(value);
+    if (value && rgbRegex.test(value)) {
+      setBaseColor(
+        createColor(value ?? defaultHexColor, [alpha1 ?? 1, alpha2 ?? 1]),
+      );
+    }
   };
 
   const { inputRef: hexRef } = useIMask({
     value: hex,
-    onChange: (value) => handleColorChange(value, 'hex'),
-    maskOptions: {
-      mask: '{#}HEXHEXHEXHEXHEXHEX',
-      blocks: {
-        HEX: {
-          mask: IMask.MaskedEnum,
-          enum: [
-            '0',
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F',
-          ],
-        },
-      },
-    },
+    onChange: handleHexChange,
+    maskOptions: hexMask,
   });
 
   const { inputRef: rgbRef } = useIMask({
     value: rgb,
-    onChange: (value) => handleColorChange(value, 'rgb'),
-    maskOptions: {
-      mask: 'rgb(RGB, RGB, RGB)',
-      blocks: {
-        RGB: {
-          mask: Number,
-          min: 0,
-          max: 255,
-        },
-      },
-    },
+    onChange: handleRgbChange,
+    maskOptions: rgbMask,
   });
 
   const handleChangeOpacity = (opacity: [string | null, string | null]) => {
-    onChangeColor(
-      createColor(c1, [
-        percentToFloat(opacity[0] ?? ''),
-        percentToFloat(opacity[1] ?? ''),
-      ]),
-    );
+    const [o1, o2] = [
+      percentToFloat(opacity[0] ?? ''),
+      percentToFloat(opacity[1] ?? ''),
+    ];
+    setAlpha1(o1);
+    setAlpha2(o2);
+    setBaseColor(createColor(hex ?? defaultHexColor, [o1, o2]));
   };
 
+  const handleChangeParams =
+    (key: keyof ShadowParams) => (value: [string | null, string | null]) => {
+      const [val1, val2] = [
+        convertSizeToNumber(value[0] ?? '', 'px'),
+        convertSizeToNumber(value[1] ?? '', 'px'),
+      ];
+      if (key === 'x') {
+        setX1(val1);
+        setX2(val2);
+      } else if (key === 'y') {
+        setY1(val1);
+        setY2(val2);
+      } else {
+        setBlur1(val1);
+        setBlur2(val2);
+      }
+      setParams({
+        ...params,
+        [key]: [val1, val2],
+      });
+    };
+
   const values: {
-    blur: [string, string];
-    x: [string, string];
-    y: [string, string];
+    blur: [string | null, string | null];
+    x: [string | null, string | null];
+    y: [string | null, string | null];
   } = useMemo(() => {
     return {
-      blur: [`${params.blur[0]}px`, `${params.blur[1]}px`],
-      x: [`${params.x[0]}px`, `${params.x[1]}px`],
-      y: [`${params.y[0]}px`, `${params.y[1]}px`],
+      blur: [blur1 ? `${blur1}px` : null, blur2 ? `${blur2}px` : null],
+      x: [x1 ? `${x1}px` : null, x2 ? `${x2}px` : null],
+      y: [y1 ? `${y1}px` : null, y2 ? `${y2}px` : null],
     };
-  }, [params]);
+  }, [x1, x2, y1, y2, blur1, blur2]);
 
   const boxShadow = useMemo(
     () =>
       createShadow({
         ...params,
-        color: colors,
+        color: baseColor,
       }),
-    [colors[0], colors[1], params],
+    [baseColor, params],
+  );
+
+  const alpha: [string | null, string | null] = useMemo(
+    () => [
+      alpha1 ? `${alpha1 * 100}%` : null,
+      alpha2 ? `${alpha2 * 100}%` : null,
+    ],
+    [alpha1, alpha2],
   );
 
   return (
@@ -178,7 +201,7 @@ export const ConstructorVarsShadowOption = (props: Props) => {
         <div className={cnConstructorVarsShadowOption('List')}>
           <ConstructorVarsShadowParametrs
             title="Прозрачность"
-            value={[`${o1 * 100}%`, `${o2 * 100}%`]}
+            value={alpha}
             onChange={(opacity) => handleChangeOpacity(opacity)}
             additional={<ShadowExample boxShadow={boxShadow} />}
             maskOptions={maskPercent}
@@ -187,15 +210,7 @@ export const ConstructorVarsShadowOption = (props: Props) => {
           <ConstructorVarsShadowParametrs
             title="Радиус размытия"
             value={values.blur}
-            onChange={([b1, b2]) =>
-              onChangeParams({
-                ...params,
-                blur: [
-                  convertSizeToNumber(b1 ?? '0', 'px'),
-                  convertSizeToNumber(b2 ?? '0', 'px'),
-                ],
-              })
-            }
+            onChange={handleChangeParams('blur')}
             maskOptions={maskPx}
             additional={<ShadowExample boxShadow={boxShadow} />}
             names={['Слой 1', 'Слой 2']}
@@ -203,15 +218,7 @@ export const ConstructorVarsShadowOption = (props: Props) => {
           <ConstructorVarsShadowParametrs
             title="Сдвиг по оси X"
             value={values.x}
-            onChange={([x1, x2]) =>
-              onChangeParams({
-                ...params,
-                x: [
-                  convertSizeToNumber(x1 ?? '0', 'px'),
-                  convertSizeToNumber(x2 ?? '0', 'px'),
-                ],
-              })
-            }
+            onChange={handleChangeParams('x')}
             maskOptions={maskPx}
             additional={<ShadowExample boxShadow={boxShadow} />}
             names={['Слой 1', 'Слой 2']}
@@ -219,15 +226,7 @@ export const ConstructorVarsShadowOption = (props: Props) => {
           <ConstructorVarsShadowParametrs
             title="Сдвиг по оси Y"
             value={values.y}
-            onChange={([y1, y2]) =>
-              onChangeParams({
-                ...params,
-                y: [
-                  convertSizeToNumber(y1 ?? '0', 'px'),
-                  convertSizeToNumber(y2 ?? '0', 'px'),
-                ],
-              })
-            }
+            onChange={handleChangeParams('y')}
             maskOptions={maskPx}
             additional={<ShadowExample boxShadow={boxShadow} />}
             names={['Слой 1', 'Слой 2']}

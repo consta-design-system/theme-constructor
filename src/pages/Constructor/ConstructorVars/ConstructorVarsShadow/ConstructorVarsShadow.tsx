@@ -1,88 +1,76 @@
-import { useAction, useAtom } from '@reatom/npm-react';
-import React, { useCallback } from 'react';
+import { useAtom } from '@reatom/npm-react';
+import Color from 'color';
+import React, { useMemo } from 'react';
 
 import {
-  shadowDarkColorsAtom,
-  shadowLightColorsAtom,
-  shadowOptionsAtom,
+  shadowDarkColorFabricAtoms,
+  shadowLightColorFabricAtoms,
+  shadowParamsFabricAtoms,
 } from '##/modules/shadow';
+import { ShadowParamsFabricResponse } from '##/modules/shadow/helper';
 import { themeAtom } from '##/modules/theme';
-import { ShadowColors, ShadowParams } from '##/types/theme';
+import { ShadowColors } from '##/types/theme';
+import {
+  defaultShadowDarkColors,
+  defaultShadowLightColors,
+} from '##/utils/theme/defaultValues';
 
 import { ConstructorVarsShadowOption } from './ConstructorVarsShadowOption';
 
+const descriptionMap: Record<keyof ShadowColors, string> = {
+  '--shadow-group':
+    'Тень для выделения группы объектов на странице.\nИспользуется для карточек.',
+  '--shadow-layer':
+    'Тень для выделения объектов на отдельный слой.\nИспользуется для летающих кнопок, боковых панелей, выпадающих списков и временно появляющихся элементов интерфейса.',
+  '--shadow-modal':
+    'Тень для выделения отдельных режимов. Используется в модальных окнах и поповерах.',
+};
+
 export const ConstructorVarsShadow = () => {
-  const [shadowLightColors] = useAtom(shadowLightColorsAtom);
-  const [shadowDarkColors] = useAtom(shadowDarkColorsAtom);
-  const [shadowOptions] = useAtom(shadowOptionsAtom);
+  const [shadowOptions] = useAtom(shadowParamsFabricAtoms);
 
   const [theme] = useAtom(themeAtom);
 
   const type = theme.color.primary === 'gpnDefault' ? 'default' : 'dark';
 
-  const setShadowLightColors = useAction((ctx, value: ShadowColors) =>
-    shadowLightColorsAtom(ctx, value),
-  );
-  const setShadowDarkColors = useAction((ctx, value: ShadowColors) =>
-    shadowDarkColorsAtom(ctx, value),
-  );
-  const setShadowColors = useCallback(
-    (value: ShadowColors) => {
-      (type === 'default' ? setShadowLightColors : setShadowDarkColors)(value);
-    },
-    [type],
-  );
+  const colors =
+    type === 'default'
+      ? shadowLightColorFabricAtoms
+      : shadowDarkColorFabricAtoms;
 
-  const setShadowOptions = useAction(
-    (ctx, value: Record<keyof ShadowColors, ShadowParams>) =>
-      shadowOptionsAtom(ctx, value),
-  );
-
-  const colors = type === 'default' ? shadowLightColors : shadowDarkColors;
-
-  const handleChangeColor = (
-    value: [string, string],
-    key: keyof ShadowColors,
-  ) => {
-    setShadowColors({
-      ...colors,
-      [key]: value,
+  const options = useMemo(() => {
+    return colors.map(({ name, atoms: colorAtoms }) => {
+      const color = Color(
+        (type === 'default'
+          ? defaultShadowLightColors
+          : defaultShadowDarkColors)[name][0],
+      ).hex();
+      return {
+        name,
+        colorAtoms,
+        defaultHexColor: color,
+        paramsAtoms: (
+          shadowOptions.find((el) => el.name === name) as {
+            name: keyof ShadowColors;
+            atoms: ShadowParamsFabricResponse;
+          }
+        ).atoms,
+      };
     });
-  };
-
-  const handleChangeParams = (value: ShadowParams, key: keyof ShadowColors) => {
-    setShadowOptions({
-      ...shadowOptions,
-      [key]: value,
-    });
-  };
+  }, [colors, shadowOptions]);
 
   return (
     <>
-      <ConstructorVarsShadowOption
-        title="--shadow-group"
-        colors={colors['--shadow-group']}
-        description={`Тень для выделения группы объектов на странице.\nИспользуется для карточек.`}
-        params={shadowOptions['--shadow-group']}
-        onChangeParams={(val) => handleChangeParams(val, '--shadow-group')}
-        onChangeColor={(val) => handleChangeColor(val, '--shadow-group')}
-      />
-      <ConstructorVarsShadowOption
-        title="--shadow-layer"
-        colors={colors['--shadow-layer']}
-        params={shadowOptions['--shadow-layer']}
-        onChangeColor={(val) => handleChangeColor(val, '--shadow-layer')}
-        onChangeParams={(val) => handleChangeParams(val, '--shadow-layer')}
-        description={`Тень для выделения объектов на отдельный слой.\nИспользуется для летающих кнопок, боковых панелей, выпадающих списков и временно появляющихся элементов интерфейса.`}
-      />
-      <ConstructorVarsShadowOption
-        title="--shadow-modal"
-        colors={colors['--shadow-modal']}
-        params={shadowOptions['--shadow-modal']}
-        onChangeColor={(val) => handleChangeColor(val, '--shadow-modal')}
-        onChangeParams={(val) => handleChangeParams(val, '--shadow-modal')}
-        description="Тень для выделения отдельных режимов. Используется в модальных окнах и поповерах."
-      />
+      {options.map(({ name, colorAtoms, paramsAtoms, defaultHexColor }) => (
+        <ConstructorVarsShadowOption
+          title={name}
+          key={`${name}-${type}`}
+          colorAtoms={colorAtoms}
+          description={descriptionMap[name]}
+          paramsAtoms={paramsAtoms}
+          defaultHexColor={defaultHexColor}
+        />
+      ))}
     </>
   );
 };

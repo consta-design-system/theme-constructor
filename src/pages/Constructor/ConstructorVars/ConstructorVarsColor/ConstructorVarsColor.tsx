@@ -1,10 +1,15 @@
-import { useAction, useAtom } from '@reatom/npm-react';
-import React, { useCallback } from 'react';
+import { useAtom } from '@reatom/npm-react';
+import Color from 'color';
+import React from 'react';
 
-import { colorDarkAtom, colorLightAtom } from '##/modules/colors';
+import { darkColorFabricAtoms, lightColorFabricAtoms } from '##/modules/colors';
 import { themeAtom } from '##/modules/theme';
 import { ColorBase } from '##/types/theme';
 import { colorBaseNames } from '##/utils/theme/colors';
+import {
+  defaultDarkColors,
+  defaultLightColors,
+} from '##/utils/theme/defaultValues';
 
 import { ConstructorVarsColorOption } from './ConstructorVarsColorOption';
 import { colorGroups, getColorsArray } from './helper';
@@ -21,41 +26,28 @@ const getGroup = (key: string) => {
 };
 
 export const ConstructorVarsColor = () => {
-  const [lightColor] = useAtom(colorLightAtom);
-  const [darkColor] = useAtom(colorDarkAtom);
-
   const [theme] = useAtom(themeAtom);
 
   const type = theme.color.primary === 'gpnDefault' ? 'default' : 'dark';
 
-  const setLightColor = useAction((ctx, value: ColorBase) =>
-    colorLightAtom(ctx, value),
-  );
-  const setDarkColor = useAction((ctx, value: ColorBase) =>
-    colorDarkAtom(ctx, value),
-  );
+  const colors =
+    type === 'default' ? lightColorFabricAtoms : darkColorFabricAtoms;
 
-  const setColor = useCallback(
-    (value: ColorBase) => {
-      (type === 'default' ? setLightColor : setDarkColor)(value);
-    },
-    [type],
-  );
-
-  const colors = type === 'default' ? lightColor : darkColor;
-
-  const getItems = (key: keyof ColorBase): ColorOption[] => {
+  const getItems = (
+    key: keyof ColorBase,
+    targetColor: string,
+  ): ColorOption[] => {
     return getColorsArray(type)[key].map(({ label, description, color }) => {
-      const [h, s, l, a] = color(colors[key])
-        .split('(')[1]
-        .split(')')[0]
-        .split(',')
-        .map((el) => Number(el.split('%')[0]));
+      const currentColor = Color(color(targetColor));
       return {
         label,
-        color: color(colors[key]),
+        color: color(targetColor),
         groupId: getGroup(label),
-        value: `H ${h}  S ${Math.ceil(s)}%  L ${Math.ceil(l)}%  A ${a * 100}%`,
+        value: `H ${currentColor.hue()}  S ${Math.ceil(
+          currentColor.saturationl(),
+        )}%  L ${Math.ceil(currentColor.lightness())}%  A ${
+          currentColor.alpha() * 100
+        }%`,
         description,
       };
     });
@@ -63,16 +55,18 @@ export const ConstructorVarsColor = () => {
 
   return (
     <>
-      {Object.keys(lightColor).map((key) => (
+      {colors.map(({ name, atoms }) => (
         <ConstructorVarsColorOption
-          title={key}
-          key={`${key}-${type}`}
-          value={colors[key as keyof ColorBase]}
-          description={colorBaseNames[key as keyof ColorBase]}
-          items={getItems(key as keyof ColorBase)}
-          onChange={(value) => {
-            setColor({ ...colors, [key as keyof ColorBase]: value });
-          }}
+          title={name}
+          key={`${name}-${type}`}
+          atoms={atoms}
+          description={colorBaseNames[name as keyof ColorBase]}
+          getItems={(color) => getItems(name as keyof ColorBase, color)}
+          defaultColor={
+            (type === 'default' ? defaultLightColors : defaultDarkColors)[
+              name as keyof ColorBase
+            ]
+          }
           groups={colorGroups}
         />
       ))}

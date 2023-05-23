@@ -5,9 +5,8 @@ import { IconHamburger } from '@consta/icons/IconHamburger';
 import { Button } from '@consta/uikit/Button';
 import { ChoiceGroup } from '@consta/uikit/ChoiceGroup';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
-import { ThemePreset } from '@consta/uikit/Theme';
 import { useFlag } from '@consta/uikit/useFlag';
-import { useAction, useAtom } from '@reatom/npm-react';
+import { useAtom } from '@reatom/npm-react';
 import React from 'react';
 
 import { DownloadModal } from '##/components/DownloadModal';
@@ -31,11 +30,7 @@ export const ConstructorHeader: React.FC<{ className?: string }> = ({
   const [showDownloadModal, setShowDownloadModal] = useFlag();
   const [showMenu, setShowMenu] = useFlag();
 
-  const [theme] = useAtom(themeAtom);
-
-  const setTheme = useAction((ctx, value: ThemePreset) =>
-    themeAtom(ctx, value),
-  );
+  const [theme, setTheme] = useAtom(themeAtom);
 
   return (
     <div

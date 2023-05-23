@@ -9,7 +9,7 @@ import { getShadowCSS } from '##/hooks/useSave/helpers/shadow';
 import { getSizeCSS } from '##/hooks/useSave/helpers/size';
 import { getSpaceCSS } from '##/hooks/useSave/helpers/space';
 import { toCapitalize, toTranslit } from '##/hooks/useSave/helpers/transliter';
-import { colorDarkAtom, colorLightAtom } from '##/modules/colors';
+import { darkColorsAtom, lightColorsAtom } from '##/modules/colors';
 import {
   fontAtom,
   lineHeightTermAtom,
@@ -19,7 +19,7 @@ import { radiusAtom } from '##/modules/radius';
 import {
   shadowDarkColorsAtom,
   shadowLightColorsAtom,
-  shadowOptionsAtom,
+  shadowParamsAtom,
 } from '##/modules/shadow';
 import { spaceFactorAtom } from '##/modules/space';
 import { themeAtom } from '##/modules/theme';
@@ -37,9 +37,9 @@ export const useExampleTheme = () => {
   const [lineHeight] = useAtom(lineHeightTermAtom);
   const [font] = useAtom(fontAtom);
   const [space] = useAtom(spaceFactorAtom);
-  const [colorsLight] = useAtom(colorLightAtom);
-  const [colorsDark] = useAtom(colorDarkAtom);
-  const [shadowParams] = useAtom(shadowOptionsAtom);
+  const [colorsLight] = useAtom(lightColorsAtom);
+  const [colorsDark] = useAtom(darkColorsAtom);
+  const [shadowParams] = useAtom(shadowParamsAtom);
   const [shadowLightColors] = useAtom(shadowLightColorsAtom);
   const [shadowDarkColors] = useAtom(shadowDarkColorsAtom);
 
@@ -94,7 +94,7 @@ export const useExampleTheme = () => {
       spaceCss,
       shadowCss,
       controlCss,
-    ].join('\n\n');
+    ];
   }, [
     controlCss,
     fontCss,

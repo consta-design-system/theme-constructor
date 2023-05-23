@@ -50,6 +50,7 @@ export const colorGroups = [
 
 export const hexMask = {
   mask: '{#}HEXHEXHEXHEXHEXHEX',
+  placeholderChar: '#',
   blocks: {
     HEX: {
       mask: IMask.MaskedEnum,
@@ -83,10 +84,12 @@ export const hexMask = {
 
 export const rgbaMask = {
   mask: 'rgba(RGB, RGB, RGB, ALPHA)',
+  placeholderChar: 'rgba(',
   blocks: {
     RGB: {
       mask: Number,
       min: 0,
+      scale: 0,
       max: 255,
     },
     ALPHA: {
@@ -99,22 +102,33 @@ export const rgbaMask = {
   },
 };
 
+export const rgbMask = {
+  mask: 'rgb(RGB, RGB, RGB)',
+  placeholderChar: 'rgb(',
+  blocks: {
+    RGB: {
+      mask: Number,
+      min: 0,
+      max: 255,
+    },
+  },
+};
+
 export const hslaMask = {
-  mask: 'hsla(RAD, PERC%,PERC%, ALPHA)',
+  mask: 'hsla(RAD, PERC%, PERC%, ALPHA)',
+  placeholderChar: 'hsla(',
   blocks: {
     RAD: {
       mask: Number,
       min: 0,
+      scale: 0,
       max: 360,
-      radix: '.',
-      mapToRadix: ['.'],
     },
     PERC: {
       mask: Number,
       min: 0,
       max: 100,
-      radix: '.',
-      mapToRadix: ['.'],
+      scale: 3,
     },
     ALPHA: {
       mask: Number,
@@ -125,3 +139,11 @@ export const hslaMask = {
     },
   },
 };
+
+export const hexRegex = /^#([A-Fa-f0-9]{6})$/;
+export const rgbaRegex =
+  /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/;
+export const rgbRegex =
+  /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
+export const hslaRegex =
+  /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/;

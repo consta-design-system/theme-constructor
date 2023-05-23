@@ -1,9 +1,10 @@
 import './ConstructorLeftSide.css';
 
-import { useFlag } from '@consta/uikit/useFlag';
-import React, { useEffect } from 'react';
+import { useAtom } from '@reatom/npm-react';
+import React from 'react';
 
 import { ScenarioModal } from '##/components/ScenarioModal';
+import { scenarioModalAtom } from '##/modules/app';
 import { cn } from '##/utils/bem';
 
 import { ConstructorHeader } from '../ConstructorHeader';
@@ -13,9 +14,7 @@ import { ConstructorVarsSelector } from '../ConstructorVarsSelector';
 const cnConstructorLeftSide = cn('ConstructorLeftSide');
 
 export const ConstructorLeftSide = () => {
-  const [isOpen, setIsOpen] = useFlag();
-
-  useEffect(setIsOpen.on, []);
+  const [isOpen, setIsOpen] = useAtom(scenarioModalAtom);
 
   return (
     <div className={cnConstructorLeftSide()}>
@@ -24,7 +23,7 @@ export const ConstructorLeftSide = () => {
         <ConstructorVarsSelector />
         <ConstructorVars />
       </div>
-      <ScenarioModal isOpen={isOpen} onClose={setIsOpen.off} />
+      <ScenarioModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 };

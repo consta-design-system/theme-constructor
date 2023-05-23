@@ -164,7 +164,7 @@ export const ThemesModal = (props: Props) => {
         </Text>
       </div>
       <div
-        className={cnThemesModal('Wrapper', [
+        className={cnThemesModal('Wrapper', { empty: presets.length === 0 }, [
           cnMixSpace({ pV: 'xl', pH: 'l' }),
         ])}
       >

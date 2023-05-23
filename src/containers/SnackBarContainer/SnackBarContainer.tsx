@@ -2,7 +2,7 @@ import './SnackBarContainer.css';
 
 import { SnackBar } from '@consta/uikit/SnackBar';
 import { Text } from '@consta/uikit/Text';
-import { useAction, useAtom } from '@reatom/npm-react';
+import { useAtom } from '@reatom/npm-react';
 import React from 'react';
 
 import { Message, messagesAtom } from '##/modules/messages';
@@ -16,11 +16,7 @@ type Props = {
 export const SnackBarContainer = (props: Props) => {
   const { children } = props;
 
-  const [messages] = useAtom(messagesAtom);
-
-  const setMessages = useAction((ctx, value: Message[]) =>
-    messagesAtom(ctx, value),
-  );
+  const [messages, setMessages] = useAtom(messagesAtom);
 
   const removeMessage = (message: Message) => {
     setMessages(messages.filter((el) => el.id !== message.id));

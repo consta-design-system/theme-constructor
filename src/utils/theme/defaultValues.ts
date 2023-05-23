@@ -1,33 +1,38 @@
-import { ColorBase, ShadowColors, ShadowParams } from '##/types/theme';
+import {
+  ColorBase,
+  ConstructorThemePreset,
+  ShadowColors,
+  ShadowsOptions,
+} from '##/types/theme';
 
 export const defaultLightColors: ColorBase = {
-  '$color-base-base': 'rgba(0, 32, 51, 1)',
-  '$color-base-essential': 'rgba(255, 255, 255, 1)',
-  '$color-base-project': 'rgba(0, 113, 178, 1)',
-  '$color-base-phantom': 'rgba(0, 66, 105, 1)',
-  '$color-base-path': 'rgba(0, 120, 210, 1)',
-  '$color-base-system': 'rgba(206, 216, 222, 1)',
-  '$color-base-success': 'rgba(34, 195, 142, 1)',
-  '$color-base-alert': 'rgba(235, 87, 87, 1)',
-  '$color-base-warning': 'rgba(243, 139, 0, 1)',
-  '$color-base-caution': 'rgba(242, 201, 76, 1)',
-  '$color-base-normal': 'rgba(86, 185, 242, 1)',
-  '$color-base-critical': 'rgba(51, 0, 15, 1)',
+  '$color-base-base': '#002033',
+  '$color-base-essential': '#FFFFFF',
+  '$color-base-project': '#0071B2',
+  '$color-base-phantom': '#004269',
+  '$color-base-path': '#0078D2',
+  '$color-base-system': '#CED8DE',
+  '$color-base-success': '#22C38E',
+  '$color-base-alert': '#EB5757',
+  '$color-base-warning': '#F38B00',
+  '$color-base-caution': '#F2C94C',
+  '$color-base-normal': '#56B9F2',
+  '$color-base-critical': '#33000F',
 };
 
 export const defaultDarkColors: ColorBase = {
-  '$color-base-base': 'rgba(255, 255, 255, 1)',
-  '$color-base-essential': 'rgba(34, 39, 43, 1)',
-  '$color-base-project': 'rgba(0, 113, 178, 1)',
-  '$color-base-phantom': 'rgba(246, 251, 253, 1)',
-  '$color-base-path': 'rgba(0, 120, 210, 1)',
-  '$color-base-system': 'rgba(75, 89, 99, 1)',
-  '$color-base-success': 'rgba(34, 195, 142, 1)',
-  '$color-base-alert': 'rgba(245, 77, 77, 1)',
-  '$color-base-warning': 'rgba(243, 139, 0, 1)',
-  '$color-base-caution': 'rgba(242, 201, 76, 1)',
-  '$color-base-normal': 'rgba(10, 165, 255, 1)',
-  '$color-base-critical': 'rgba(51, 0, 15, 1)',
+  '$color-base-base': '#FFFFFF',
+  '$color-base-essential': '#22272B',
+  '$color-base-project': '#0071B2',
+  '$color-base-phantom': '#F6FBFD',
+  '$color-base-path': '#0078D2',
+  '$color-base-system': '#4B5963',
+  '$color-base-success': '#22C38E',
+  '$color-base-alert': '#F54D4D',
+  '$color-base-warning': '#F38B00',
+  '$color-base-caution': '#F2C94C',
+  '$color-base-normal': '#0AA5FF',
+  '$color-base-critical': '#33000F',
 };
 
 export const defaultLineHeight: number = 0;
@@ -51,7 +56,7 @@ export const defaultShadowLightColors: ShadowColors = {
   '--shadow-modal': ['rgba(0, 32, 51, 0.04)', 'rgba(0, 32, 51, 0.12)'],
 };
 
-export const defaultShadowParams: Record<keyof ShadowColors, ShadowParams> = {
+export const defaultShadowParams: ShadowsOptions = {
   '--shadow-group': {
     x: [0, 0],
     y: [2, 2],
@@ -70,3 +75,24 @@ export const defaultShadowParams: Record<keyof ShadowColors, ShadowParams> = {
 };
 
 export const defaultAutoSaveName = 'AutoSave';
+
+export const defaultPresetValue: ConstructorThemePreset['theme'] = {
+  colors: {
+    light: defaultLightColors,
+    dark: defaultDarkColors,
+  },
+  radius: defaultRadius,
+  space: defaultSpace,
+  font: {
+    font: defaultFont,
+    size: defaultTextSize,
+    lineHeight: defaultLineHeight,
+  },
+  shadow: {
+    colors: {
+      light: defaultShadowLightColors,
+      dark: defaultShadowDarkColors,
+    },
+    params: defaultShadowParams,
+  },
+};

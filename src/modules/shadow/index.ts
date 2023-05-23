@@ -1,85 +1,64 @@
-import { atom } from '@reatom/core';
-import { onUpdate } from '@reatom/hooks';
+import { Atom, atom } from '@reatom/core';
 
-import { ShadowColors, ShadowParams } from '##/types/theme';
-import { compareObjects } from '##/utils/theme/comparator';
+import { ShadowColors, ShadowsOptions } from '##/types/theme';
 import {
-  defaultAutoSaveName,
   defaultShadowDarkColors,
   defaultShadowLightColors,
   defaultShadowParams,
 } from '##/utils/theme/defaultValues';
 
-import { autoSavePresetAtom } from '../presets';
+import { createShadowColorAtoms, createShadowParamsAtom } from './helper';
 
-export const shadowLightColorsAtom = atom<ShadowColors>(
+export const shadowLightColorFabricAtoms = Object.keys(
   defaultShadowLightColors,
+).map((key) => ({
+  name: key as keyof ShadowColors,
+  atoms: createShadowColorAtoms(
+    defaultShadowLightColors[key as keyof ShadowColors],
+  ),
+}));
+
+export const shadowLightColorsAtom: Atom<ShadowColors> = atom((ctx) => {
+  const colors: Partial<ShadowColors> = {};
+  shadowLightColorFabricAtoms.forEach(({ name, atoms }) => {
+    colors[name] = ctx.get(atoms[4]);
+    ctx.spy(atoms[4]);
+  });
+  return colors as ShadowColors;
+});
+
+export const shadowDarkColorFabricAtoms = Object.keys(
+  defaultShadowDarkColors,
+).map((key) => ({
+  name: key as keyof ShadowColors,
+  atoms: createShadowColorAtoms(
+    defaultShadowDarkColors[key as keyof ShadowColors],
+  ),
+}));
+
+export const shadowDarkColorsAtom: Atom<ShadowColors> = atom((ctx) => {
+  const colors: Partial<ShadowColors> = {};
+  shadowDarkColorFabricAtoms.forEach(({ name, atoms }) => {
+    colors[name] = ctx.get(atoms[4]);
+    ctx.spy(atoms[4]);
+  });
+  return colors as ShadowColors;
+});
+
+export const shadowParamsFabricAtoms = Object.keys(defaultShadowParams).map(
+  (key) => ({
+    name: key as keyof ShadowColors,
+    atoms: createShadowParamsAtom(
+      defaultShadowParams[key as keyof ShadowColors],
+    ),
+  }),
 );
 
-export const shadowDarkColorsAtom = atom<ShadowColors>(defaultShadowDarkColors);
-
-export const shadowOptionsAtom =
-  atom<Record<keyof ShadowColors, ShadowParams>>(defaultShadowParams);
-
-onUpdate(shadowLightColorsAtom, (ctx, value) => {
-  if (!compareObjects(value, defaultShadowLightColors)) {
-    const preset = ctx.get(autoSavePresetAtom);
-    const date = new Date().toISOString();
-    autoSavePresetAtom(ctx, {
-      name: preset?.name ?? defaultAutoSaveName,
-      createdAt: preset?.createdAt ?? date,
-      modifiedAt: date,
-      theme: {
-        ...(preset?.theme ?? {}),
-        shadow: {
-          colors: {
-            light: value,
-            dark: preset?.theme?.shadow?.colors?.dark,
-          },
-          params: preset?.theme?.shadow?.params,
-        },
-      },
-    });
-  }
-});
-
-onUpdate(shadowDarkColorsAtom, (ctx, value) => {
-  if (!compareObjects(value, defaultShadowDarkColors)) {
-    const preset = ctx.get(autoSavePresetAtom);
-    const date = new Date().toISOString();
-    autoSavePresetAtom(ctx, {
-      name: preset?.name ?? defaultAutoSaveName,
-      createdAt: preset?.createdAt ?? date,
-      modifiedAt: date,
-      theme: {
-        ...(preset?.theme ?? {}),
-        shadow: {
-          colors: {
-            dark: value,
-            light: preset?.theme?.shadow?.colors?.light,
-          },
-          params: preset?.theme?.shadow?.params,
-        },
-      },
-    });
-  }
-});
-
-onUpdate(shadowOptionsAtom, (ctx, value) => {
-  if (!compareObjects(value, defaultShadowParams)) {
-    const preset = ctx.get(autoSavePresetAtom);
-    const date = new Date().toISOString();
-    autoSavePresetAtom(ctx, {
-      name: preset?.name ?? defaultAutoSaveName,
-      createdAt: preset?.createdAt ?? date,
-      modifiedAt: date,
-      theme: {
-        ...(preset?.theme ?? {}),
-        shadow: {
-          colors: preset?.theme?.shadow?.colors,
-          params: preset?.theme?.shadow?.params,
-        },
-      },
-    });
-  }
+export const shadowParamsAtom: Atom<ShadowsOptions> = atom((ctx) => {
+  const colors: Partial<ShadowsOptions> = {};
+  shadowParamsFabricAtoms.forEach(({ name, atoms }) => {
+    colors[name] = ctx.get(atoms[6]);
+    ctx.spy(atoms[6]);
+  });
+  return colors as ShadowsOptions;
 });

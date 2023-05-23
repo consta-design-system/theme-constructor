@@ -1,5 +1,5 @@
 import { TextField, useIMask } from '@consta/uikit/TextField';
-import { useAction, useAtom } from '@reatom/npm-react';
+import { useAtom } from '@reatom/npm-react';
 import React, { useMemo, useState } from 'react';
 
 import { SpaceExample } from '##/components/SpaceExample';
@@ -11,14 +11,10 @@ import { convertSizeToNumber } from '##/utils/sizes';
 import { calculateSpaces } from '##/utils/theme/calculators';
 
 export const ConstructorVarsSpace = () => {
-  const [space] = useAtom(spaceFactorAtom);
+  const [space, setSpace] = useAtom(spaceFactorAtom);
 
   const [value, setValue] = useState<string | null>(
     space ? `${space}px` : '2px',
-  );
-
-  const setSpaces = useAction((ctx, value: number) =>
-    spaceFactorAtom(ctx, value),
   );
 
   const spaceItems = useMemo(() => {
@@ -32,7 +28,7 @@ export const ConstructorVarsSpace = () => {
   }, [space]);
 
   const handleChange = (value: string | null) => {
-    setSpaces(convertSizeToNumber(value ?? 2, 'px'));
+    setSpace(convertSizeToNumber(value ?? 2, 'px'));
     setValue(value);
   };
 
