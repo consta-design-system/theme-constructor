@@ -7,7 +7,7 @@ import { Button } from '@consta/uikit/Button';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Sidebar } from '@consta/uikit/Sidebar';
 import { Text } from '@consta/uikit/Text';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
 import IconFeedback from '##/icons/Feedback.icon.svg';
@@ -30,7 +30,6 @@ const cnMenu = cn('Menu');
 
 export const Menu = (props: Props) => {
   const { isOpen, onClose: onCloseProp } = props;
-  const [path, setPath] = useState<string | undefined>();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -101,11 +100,18 @@ export const Menu = (props: Props) => {
               {items.map((item, i) => (
                 <Text
                   key={cnMenu('Item', { index, i })}
-                  as="button"
                   size="s"
                   lineHeight="xs"
                   className={cnMenu('Item', [cnMixSpace({ pH: 'xs' })])}
                   onClick={item.onClick}
+                  {...(item.href
+                    ? {
+                        as: 'a',
+                        href: item.href,
+                      }
+                    : {
+                        as: 'button',
+                      })}
                 >
                   {item.label}
                   {item.rightSide}
@@ -119,24 +125,16 @@ export const Menu = (props: Props) => {
         <BannerButton
           className={cnMixSpace({ mB: 'xs' })}
           label="Сообщить о проблеме"
-          as="div"
-          onClick={() => {
-            setPath(
-              'https://github.com/consta-design-system/uikit/issues/new/choose',
-            );
-            setModalType('quit');
-          }}
+          as="a"
+          href="https://github.com/consta-design-system/uikit/issues/new/choose"
           icon={IconFeedback}
           description="Исправим ошибку, которую вы найдёте"
         />
         <BannerButton
           label="Telegram"
-          as="div"
           icon={IconTelegram}
-          onClick={() => {
-            setPath('https://t.me/Consta_Chat');
-            setModalType('quit');
-          }}
+          as="a"
+          href="https://t.me/Consta_Chat"
         />
       </div>
       <ThemesModal
@@ -157,7 +155,6 @@ export const Menu = (props: Props) => {
             onClick: () => {
               onClose();
               clearAutoSave();
-              window.open(path, '_blank');
             },
           },
           {

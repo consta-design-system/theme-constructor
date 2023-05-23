@@ -1,3 +1,4 @@
+import { useLink } from '@consta/stand/src/hooks/useLink';
 import { getGroups } from '@consta/uikit/__internal__/src/utils/getGroups';
 import { Text } from '@consta/uikit/Text';
 import { useAction } from '@reatom/npm-react';
@@ -11,6 +12,7 @@ type MenuItem = {
   label: string;
   onClick?: React.MouseEventHandler;
   groupId?: string;
+  href?: string;
   rightSide?: React.ReactNode;
 };
 
@@ -39,6 +41,8 @@ export const useMenu = (params: Params) => {
   const { presets, hasChanges, clearPreset } = useConstructorPresets();
 
   const setPresetValue = useAction(onSetPresetValue);
+
+  const [href, onClick] = useLink({ to: 'HOME' });
 
   const clearAutoSave = () => {
     setPresetValue(defaultPresetValue);
@@ -92,11 +96,13 @@ export const useMenu = (params: Params) => {
       {
         label: 'Портал Consta',
         groupId: 'navigation',
+        onClick,
+        href,
       },
-      {
-        label: 'Гайд по конструктору',
-        groupId: 'navigation',
-      },
+      // {
+      //   label: 'Гайд по конструктору',
+      //   groupId: 'navigation',
+      // },
     ];
   }, [inputRef?.current]);
 

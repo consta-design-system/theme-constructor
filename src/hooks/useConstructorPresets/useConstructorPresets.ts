@@ -163,6 +163,7 @@ export const useConstructorPresets = () => {
     const arr = [...presets.filter((el) => el.name !== name), preset];
     setPresets(arr);
     if (preset) {
+      setCurrentPreset(preset);
       createMessage(
         'Тема успешно сохранена',
         'Теперь можно в любой момент открыть её и продолжить работу. Даже, если закроете вкладку.',

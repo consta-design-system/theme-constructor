@@ -27,6 +27,7 @@ export const ConstructorFooter: React.FC<{ className?: string }> = ({
         view="link"
         as="a"
         size="s"
+        target="_blank"
         href="https://github.com/consta-design-system/uikit/tree/dev/src/components/Theme"
         lineHeight="m"
       >
