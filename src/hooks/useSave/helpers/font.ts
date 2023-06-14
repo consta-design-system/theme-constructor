@@ -62,14 +62,14 @@ export const getFontCSS = (
     fontsMap[font][type === 'save' ? 'css' : 'styles']
   }\n\n.${getThemeFileName(presetName, 'font')} {\n\t--font-primary:\n\t\t${
     font === 'Inter' ? "'Inter'" : `'${font}',\n\t\t'Inter'`
-  },\n\t\t-apple-system,\n\t\tBlinkMacSystemFont,\n\t\t'Roboto',\n\t\t'Oxygen',\n\t\t'Ubuntu',\n\t\t'Cantarell',\n\t\t'Fira Sans',\n\t\t'Droid Sans',\n\t\t'Helvetica Neue',\n\t\tsans-serif;\n\t--font-mono:\n\t\tsource-code-pro,\n\t\tMenlo,\n\t\t Monaco,\n\t\tConsolas,\n\t\t'Courier New',\n\t\tmonospace;\n\tfont-family: var(--font-primary);}\n\n`;
+  },\n\t\t-apple-system,\n\t\tBlinkMacSystemFont,\n\t\t'Roboto',\n\t\t'Oxygen',\n\t\t'Ubuntu',\n\t\t'Cantarell',\n\t\t'Fira Sans',\n\t\t'Droid Sans',\n\t\t'Helvetica Neue',\n\t\tsans-serif;\n\t--font-mono:\n\t\tsource-code-pro,\n\t\tMenlo,\n\t\t Monaco,\n\t\tConsolas,\n\t\t'Courier New',\n\t\tmonospace;\n\tfont-family: var(--font-primary);\n}\n\n`;
 };
 export const getFontJson = (font: string) => {
   return JSON.stringify(
     {
       '--font-primary': `${
-        font === 'Inter' ? "'Inter'" : `'${font}',\n\t\t'Inter'`
-      }-apple-system,BlinkMacSystemFont,'Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif`,
+        font === 'Inter' ? "'Inter'" : `'${font}','Inter'`
+      },-apple-system,BlinkMacSystemFont,'Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif`,
       '--font-mono':
         "source-code-pro,Menlo,Monaco,Consolas,'Courier New',monospace",
       'font-family': 'var(--font-primary)',
