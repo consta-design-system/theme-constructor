@@ -190,7 +190,7 @@
     "@consta/charts": "^0.7.1",
     "@consta/header": "^1.2.0",
     "@consta/icons": "^0.4.1",
-    "@consta/uikit": "^4.14.0",
+    "@consta/uikit": "^4.30.0",
     "@evless/react-textfit": "1.1.1",
     "@reatom/core": "^3.1.23",
     "@reatom/hooks": "^3.1.5",
