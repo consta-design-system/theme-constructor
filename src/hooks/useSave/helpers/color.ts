@@ -3,7 +3,6 @@ import Color from 'color';
 import { ColorBase, ColorKeys, ShadowColors } from '##/types/theme';
 import { convertSizeToNumber } from '##/utils/sizes';
 import {
-  colorBaseNames,
   colorGroupsNames,
   colorsTypeGroup,
   getColors,
@@ -132,16 +131,7 @@ export const getColorCSS = (
   shadow: ShadowColors,
 ) => {
   const colorsMap = getColors(type);
-  const css = `/* Базовые цвета, от которых выстраивается вся палитра */\n${Object.keys(
-    colors,
-  )
-    .map((key) => {
-      const description = colorBaseNames[key as keyof ColorBase];
-      return `${key}: ${colors[key as keyof ColorBase]}${
-        description ? ` /* ${description} */` : ''
-      }`;
-    })
-    .join('\n')}\n\n/* stylelint-disable */\n.${getThemeFileName(
+  const css = `.${getThemeFileName(
     presetName,
     'color',
     type,
@@ -156,9 +146,16 @@ export const getColorCSS = (
           return `${key}: ${shadow[shadowKey][index]};`;
         }
         const { group, description, h, s, l, a } = colorsMap[key];
-        return `${key}: color(${group}${h ? ` h(${h})` : ''}${
-          s ? ` s(${s})` : ''
-        }${l ? ` l(${l})` : ''}${a ? ` a(${a}%)` : ''});${
+
+        const color = createColor({
+          color: group ? colors[group] : '#000',
+          h,
+          s,
+          l,
+          a,
+        });
+
+        return `${key}: ${typeof a === 'number' ? color : Color(color).hex()};${
           description ? ` /* ${description} */` : ''
         }`;
       };
@@ -179,7 +176,7 @@ export const getColorCSS = (
             })),
       ].join('\n\t');
     })
-    .join(`\n\n\n\t`)}\n}\n/* stylelint-enable */\n\n`;
+    .join(`\n\n\n\t`)}\n}\n\n`;
   return css;
 };
 
