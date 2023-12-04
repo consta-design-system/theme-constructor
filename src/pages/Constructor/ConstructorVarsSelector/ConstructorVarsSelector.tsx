@@ -51,7 +51,7 @@ export const ConstructorVarsSelector: React.FC<{ className?: string }> = ({
           checked={isHelp}
           size="s"
           label="подсказки"
-          onChange={({ checked }) => setIsHelp(checked)}
+          onChange={() => setIsHelp(!isHelp)}
         />
       </div>
       <Text
@@ -70,7 +70,7 @@ export const ConstructorVarsSelector: React.FC<{ className?: string }> = ({
         width="full"
         name="-vars"
         value={vars.find((el) => el.type === activeVar)}
-        onChange={({ value }) => setActiveVar(value.type)}
+        onChange={(value) => setActiveVar(value.type)}
         items={vars}
       />
     </div>

@@ -60,7 +60,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
             caption="Руководитель будет декомпозировать и делегировать задачи на отдельных участников команд"
             value={user}
             className={cnMixSpace({ mB: 'l' })}
-            onChange={({ value }) => setUser(value)}
+            onChange={setUser}
             getItemLabel={(item) => item.name}
             getItemAvatarUrl={(item) => item.url}
             items={users}
@@ -71,7 +71,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
           <Slider
             className={cnMixSpace({ mV: '2xs' })}
             value={value}
-            onChange={({ value }) => setValue(value)}
+            onChange={setValue}
           />
           <Text
             view="warning"
@@ -95,7 +95,7 @@ export const ConstructorExampleInstaller = (props: Props) => {
             value={parametrs}
             size="m"
             className={cnConstructorExampleInstaller('Checkboxes')}
-            onChange={({ value }) => setParametrs(value)}
+            onChange={setParametrs}
           />
         </div>
         <div className={cnConstructorExampleInstaller('Result')}>

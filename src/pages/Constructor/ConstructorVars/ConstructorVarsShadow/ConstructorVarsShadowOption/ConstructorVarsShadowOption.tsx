@@ -1,8 +1,9 @@
 import './ConstructorVarsShadowOption.css';
 
-import { TextField, useIMask } from '@consta/uikit/TextField';
+import { TextField } from '@consta/uikit/TextField';
 import { useAtom } from '@reatom/npm-react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { ReactMaskOpts, useIMask } from 'react-imask';
 
 import { ShadowExample } from '##/components/ShadowExample';
 import { VarField } from '##/components/VarField';
@@ -98,17 +99,17 @@ export const ConstructorVarsShadowOption = (props: Props) => {
     }
   };
 
-  const { inputRef: hexRef } = useIMask({
-    value: hex,
-    onChange: handleHexChange,
-    maskOptions: hexMask,
-  });
+  const {
+    ref: hexRef,
+    setValue: setInputHex,
+    maskRef: maskRefHex,
+  } = useIMask<HTMLInputElement, ReactMaskOpts>(hexMask);
 
-  const { inputRef: rgbRef } = useIMask({
-    value: rgb,
-    onChange: handleRgbChange,
-    maskOptions: rgbMask,
-  });
+  const {
+    ref: rgbRef,
+    setValue: setInputRgb,
+    maskRef: maskRefRgb,
+  } = useIMask<HTMLInputElement, ReactMaskOpts>(rgbMask);
 
   const handleChangeOpacity = (opacity: [string | null, string | null]) => {
     const [o1, o2] = [
@@ -171,6 +172,18 @@ export const ConstructorVarsShadowOption = (props: Props) => {
     [alpha1, alpha2],
   );
 
+  useEffect(() => {
+    if (maskRefHex.current?.value !== hex) {
+      setInputHex(hex || '');
+    }
+  }, [hex]);
+
+  useEffect(() => {
+    if (maskRefRgb.current?.value !== rgb) {
+      setInputRgb(rgb || '');
+    }
+  }, [rgb]);
+
   return (
     <VarField
       title={title}
@@ -179,18 +192,18 @@ export const ConstructorVarsShadowOption = (props: Props) => {
         <div className={cnConstructorVarsShadowOption('Controls')}>
           <div className={cnConstructorVarsShadowOption('Inputs')}>
             <TextField
-              value={hex}
+              defaultValue={hex}
               size="s"
               placeholder="#000000"
               inputRef={hexRef}
-              width="full"
+              onChange={handleHexChange}
             />
             <TextField
-              value={rgb}
+              defaultValue={rgb}
               size="s"
               placeholder="rgb(0, 0, 0)"
               inputRef={rgbRef}
-              width="full"
+              onChange={handleRgbChange}
             />
           </div>
           <ShadowExample boxShadow={boxShadow} />

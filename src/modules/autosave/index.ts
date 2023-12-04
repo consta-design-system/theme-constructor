@@ -63,16 +63,12 @@ export const autoSavePresetAtom: Atom<DeepPartial<ConstructorThemePreset> | null
       });
       ctx.spy(atoms[6]);
     });
-    ctx.spy(radiusAtom);
-    ctx.spy(spaceFactorAtom);
-    ctx.spy(fontAtom);
-    ctx.spy(textSizeTermAtom);
-    ctx.spy(lineHeightTermAtom);
-    const radius = ctx.get(radiusAtom);
-    const space = ctx.get(spaceFactorAtom);
-    const font = ctx.get(fontAtom);
-    const size = ctx.get(textSizeTermAtom);
-    const lineHeight = ctx.get(lineHeightTermAtom);
+
+    const radius = ctx.spy(radiusAtom);
+    const space = ctx.spy(spaceFactorAtom);
+    const font = ctx.spy(fontAtom);
+    const size = ctx.spy(textSizeTermAtom);
+    const lineHeight = ctx.spy(lineHeightTermAtom);
     const date = new Date().toISOString();
 
     if (ctx.get(scenarioModalAtom)) {
