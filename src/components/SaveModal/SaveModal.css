@@ -1,5 +1,8 @@
 .constructor--SaveModal {
   &.Modal-Window {
     max-width: 550px;
+    color: var(--color-typo-primary);
+    font-size: var(--size-text-m);
+    line-height: var(--line-height-text-m);
   }
 }

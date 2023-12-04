@@ -25,7 +25,7 @@ export const ScenarioModalItem = (props: Props) => {
       onClick={onClick}
     >
       <div className={cnScenarioModalItem('Content')}>
-        <Text size="m" lineHeight="m" weight="semibold">
+        <Text size="m" lineHeight="m" weight="semibold" view="primary">
           {label}
         </Text>
         {description && (
