@@ -57,7 +57,7 @@ export const ConstructorHeader: React.FC<{ className?: string }> = ({
           getItemIcon={getThemeIcon}
           value={theme}
           onlyIcon
-          onChange={({ value }) => setTheme(value)}
+          onChange={setTheme}
           size="s"
           name="theme-type"
         />

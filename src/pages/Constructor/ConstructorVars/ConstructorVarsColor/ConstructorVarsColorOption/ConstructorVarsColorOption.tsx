@@ -1,13 +1,14 @@
 import './ConstructorVarsColorOption.css';
 
 import { IconSettings } from '@consta/icons/IconSettings';
-import { TextField, useIMask } from '@consta/uikit/TextField';
+import { TextField } from '@consta/uikit/TextField';
 import { useTheme } from '@consta/uikit/Theme';
 import { useDebounce } from '@consta/uikit/useDebounce';
 import { useAtom } from '@reatom/npm-react';
 import Color from 'color';
 import IMask from 'imask';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { ReactMaskOpts, useIMask } from 'react-imask';
 
 import { ColorExample } from '##/components/ColorExample';
 import { VarField } from '##/components/VarField';
@@ -97,23 +98,23 @@ export const ConstructorVarsColorOption = (props: Props) => {
     }
   }, [pickerValue]);
 
-  const { inputRef: hexRef } = useIMask({
-    value: hex,
-    onChange: handleHexChange,
-    maskOptions: hexMask,
-  });
+  const {
+    ref: hexRef,
+    setValue: setInputHex,
+    maskRef: maskRefHex,
+  } = useIMask<HTMLInputElement, ReactMaskOpts>(hexMask);
 
-  const { inputRef: rgbaRef } = useIMask({
-    value: rgba,
-    onChange: handleRgbaChange,
-    maskOptions: rgbaMask,
-  });
+  const {
+    ref: rgbaRef,
+    setValue: setInputRgba,
+    maskRef: maskRefRgba,
+  } = useIMask<HTMLInputElement, ReactMaskOpts>(rgbaMask);
 
-  const { inputRef: hslaRef } = useIMask({
-    value: hsla,
-    onChange: handleHslaChange,
-    maskOptions: hslaMask,
-  });
+  const {
+    ref: hslaRef,
+    setValue: setInputHsla,
+    maskRef: maskRefHsla,
+  } = useIMask<HTMLInputElement, ReactMaskOpts>(hslaMask);
 
   const onReset = () => {
     const colors = convertColor(defaultColor);
@@ -124,6 +125,24 @@ export const ConstructorVarsColorOption = (props: Props) => {
 
   const items = useMemo(() => getItems?.(baseColor), [baseColor]);
 
+  useEffect(() => {
+    if (maskRefHex.current?.value !== hex) {
+      setInputHex(hex || '');
+    }
+  }, [hex]);
+
+  useEffect(() => {
+    if (maskRefRgba.current?.value !== rgba) {
+      setInputRgba(rgba || '');
+    }
+  }, [rgba]);
+
+  useEffect(() => {
+    if (maskRefHsla.current?.value !== hsla) {
+      setInputHsla(hsla || '');
+    }
+  }, [hsla]);
+
   return (
     <VarField
       onReset={onReset}
@@ -133,22 +152,25 @@ export const ConstructorVarsColorOption = (props: Props) => {
         <div className={cnConstructtorVarsColorOption('Controls')}>
           <div className={cnConstructtorVarsColorOption('Inputs')}>
             <TextField
-              value={hex}
+              defaultValue={hex}
               size="s"
               placeholder="#000000"
               inputRef={hexRef}
+              onChange={handleHexChange}
             />
             <TextField
-              value={rgba}
+              defaultValue={rgba}
               size="s"
               placeholder="rgba(0, 0, 0, 0)"
               inputRef={rgbaRef}
+              onChange={handleRgbaChange}
             />
             <TextField
-              value={hsla}
+              defaultValue={hsla}
               size="s"
               placeholder="hsla(0, 0%, 0%, 0)"
               inputRef={hslaRef}
+              onChange={handleHslaChange}
             />
           </div>
           <button

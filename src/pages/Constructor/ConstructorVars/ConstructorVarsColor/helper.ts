@@ -97,7 +97,7 @@ export const rgbaMask = {
       min: 0,
       max: 1,
       radix: '.',
-      mapToRadix: ['.'],
+      mapToRadix: ['.', ','],
     },
   },
 };
@@ -135,7 +135,7 @@ export const hslaMask = {
       min: 0,
       max: 1,
       radix: '.',
-      mapToRadix: ['.'],
+      mapToRadix: ['.', ','],
     },
   },
 };

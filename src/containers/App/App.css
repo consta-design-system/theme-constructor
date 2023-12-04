@@ -157,3 +157,9 @@ p {
     }
   }
 }
+
+.constructor--App {
+  color: var(--color-typo-primary);
+  font-size: var(--size-text-m);
+  line-height: var(--line-height-text-m);
+}

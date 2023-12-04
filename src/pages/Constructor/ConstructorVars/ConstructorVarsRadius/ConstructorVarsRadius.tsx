@@ -1,8 +1,9 @@
 import './ConstructorVarsRadius.css';
 
-import { TextField, useIMask } from '@consta/uikit/TextField';
+import { TextField } from '@consta/uikit/TextField';
 import { useAtom } from '@reatom/npm-react';
-import React, { useState } from 'react';
+import React from 'react';
+import { ReactMaskOpts, useIMask } from 'react-imask';
 
 import { VarField } from '##/components/VarField';
 import { radiusAtom } from '##/modules/radius';
@@ -14,28 +15,22 @@ const cnConstructorVarsRadius = cn('ConstructorVarsRadius');
 export const ConstructorVarsRadius = () => {
   const [radius, setRadius] = useAtom(radiusAtom);
 
-  const [value, setValue] = useState<string | null>(`${radius}px`);
-
-  const handleChange = (value: string | null) => {
-    setRadius(value ? convertSizeToNumber(value, 'px') : 4);
-    setValue(value);
-  };
-
-  const { inputRef } = useIMask({
-    value,
-    onChange: handleChange,
-    maskOptions: {
-      mask: 'NUMpx',
-      blocks: {
-        NUM: {
-          mask: Number,
-          min: 0,
-          radix: '.',
-          mapToRadix: ['.'],
-        },
+  const { ref, setValue } = useIMask<HTMLInputElement, ReactMaskOpts>({
+    mask: 'NUMpx',
+    blocks: {
+      NUM: {
+        mask: Number,
+        min: 0,
+        radix: '.',
+        mapToRadix: ['.', ','],
       },
     },
   });
+
+  const handleChange = (value: string | null) => {
+    setRadius(value ? convertSizeToNumber(value, 'px') : 4);
+    setValue(value || '');
+  };
 
   return (
     <VarField
@@ -44,7 +39,12 @@ export const ConstructorVarsRadius = () => {
       onReset={() => handleChange('4px')}
       controls={
         <div className={cnConstructorVarsRadius('Controls')}>
-          <TextField width="full" size="s" value={value} inputRef={inputRef} />
+          <TextField
+            size="s"
+            defaultValue={`${radius}px`}
+            inputRef={ref}
+            onChange={handleChange}
+          />
           <div className={cnConstructorVarsRadius('Example')}>
             <div
               className={cnConstructorVarsRadius('Block')}

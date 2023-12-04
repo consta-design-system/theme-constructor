@@ -4,8 +4,9 @@ import { IconRevert } from '@consta/icons/IconRevert';
 import { Button } from '@consta/uikit/Button';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Text } from '@consta/uikit/Text';
-import { TextField, useIMask } from '@consta/uikit/TextField';
+import { TextField } from '@consta/uikit/TextField';
 import React from 'react';
+import { ReactMaskOpts, useIMask } from 'react-imask';
 
 import { cn } from '##/utils/bem';
 
@@ -18,23 +19,21 @@ type Props = {
   onChange: (val: [string | null, string | null]) => void;
   onReset?: () => void;
   additional?: React.ReactNode;
-  maskOptions: Parameters<typeof useIMask>[0]['maskOptions'];
+  maskOptions: ReactMaskOpts;
 };
 export const ConstructorVarsShadowParametrs = (props: Props) => {
   const { title, names, value, onChange, onReset, additional, maskOptions } =
     props;
 
-  const { inputRef: firstRef } = useIMask({
-    value: value[0],
-    onChange: (val) => onChange([val, value[1]]),
+  const { ref: firstRef } = useIMask<HTMLInputElement, ReactMaskOpts>(
     maskOptions,
-  });
+    { onAccept: (val) => onChange([val, value[1]]) },
+  );
 
-  const { inputRef: secondRef } = useIMask({
-    value: value[1],
-    onChange: (val) => onChange([value[0], val]),
+  const { ref: secondRef } = useIMask<HTMLInputElement, ReactMaskOpts>(
     maskOptions,
-  });
+    { onAccept: (val) => onChange([value[0], val]) },
+  );
 
   return (
     <div
@@ -58,13 +57,13 @@ export const ConstructorVarsShadowParametrs = (props: Props) => {
             <Text size="s" lineHeight="m" view="ghost">
               {names[0]}
             </Text>
-            <TextField inputRef={firstRef} value={value[0]} size="s" />
+            <TextField inputRef={firstRef} defaultValue={value[0]} size="s" />
           </div>
           <div className={cnConstructorVarsShadowParametrs('Block')}>
             <Text size="s" lineHeight="m" view="ghost">
               {names[1]}
             </Text>
-            <TextField inputRef={secondRef} value={value[1]} size="s" />
+            <TextField inputRef={secondRef} defaultValue={value[1]} size="s" />
           </div>
         </div>
         {additional}

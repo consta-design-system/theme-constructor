@@ -72,7 +72,7 @@ export const SaveModal = (props: Props) => {
     }
   };
 
-  const handleChange = ({ value }: { value: string | null }) => {
+  const handleChange = (value: string | null) => {
     if (isError) {
       setIsError.off();
     }
@@ -104,7 +104,7 @@ export const SaveModal = (props: Props) => {
           value={mode}
           size="s"
           width="full"
-          onChange={({ value }) => setMode(value)}
+          onChange={setMode}
           name="saveType"
         />
         <Text
@@ -133,7 +133,7 @@ export const SaveModal = (props: Props) => {
             placeholder="Выберите тему"
             getItemLabel={(item) => item.name}
             getItemKey={(item) => item.name}
-            onChange={({ value }) => setCurrentTheme(value)}
+            onChange={setCurrentTheme}
           />
         ) : (
           <TextField
@@ -142,7 +142,6 @@ export const SaveModal = (props: Props) => {
             size="m"
             status={isError ? 'alert' : undefined}
             placeholder="Придумайте название"
-            width="full"
             label="Название темы"
             caption="От 4 до 20 символов"
           />

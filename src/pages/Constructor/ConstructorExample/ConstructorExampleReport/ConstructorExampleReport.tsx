@@ -2,7 +2,7 @@ import './ConstructorExampleReport.css';
 
 import { DragNDropField } from '@consta/uikit/DragNDropField';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
-import { Pagination } from '@consta/uikit/Pagination';
+import { Pagination } from '@consta/uikit/PaginationDeprecated';
 import { Table } from '@consta/uikit/Table';
 import { Text } from '@consta/uikit/Text';
 import React, { useState } from 'react';

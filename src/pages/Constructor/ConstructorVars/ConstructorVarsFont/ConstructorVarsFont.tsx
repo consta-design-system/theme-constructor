@@ -2,9 +2,10 @@ import './ConstructorVarsFont.css';
 
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Select } from '@consta/uikit/Select';
-import { TextField, useIMask } from '@consta/uikit/TextField';
+import { TextField } from '@consta/uikit/TextField';
 import { useAtom } from '@reatom/npm-react';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { ReactMaskOpts, useIMask } from 'react-imask';
 
 import { TextExample } from '##/components/TextExample';
 import { VarField } from '##/components/VarField';
@@ -43,55 +44,43 @@ export const ConstructorVarsFont = () => {
   const [lineHeight, setLineHeight] = useAtom(lineHeightTermAtom);
   const [font, setFont] = useAtom(fontAtom);
 
-  const [size, setSize] = useState<string | null>(
-    textSize ? `${textSize}px` : '0px',
-  );
-  const [height, setHeight] = useState<string | null>(
-    lineHeight ? `${lineHeight}em` : '0.0em',
-  );
-
   const handleChangeSize = (value: string | null) => {
     setTextSize(convertSizeToNumber(value ?? 0, 'px'));
-    setSize(value);
   };
 
   const handleChangeHeight = (value: string | null) => {
     setLineHeight(convertSizeToNumber(value ?? 0, 'em'));
-    setHeight(value);
   };
-
-  const { inputRef: sizeRef } = useIMask({
-    value: size,
-    onChange: handleChangeSize,
-    maskOptions: {
-      mask: 'NUMpx',
-      blocks: {
-        NUM: {
-          mask: Number,
-          min: 0,
-        },
+  const { ref: sizeRef, setValue: setSize } = useIMask<
+    HTMLInputElement,
+    ReactMaskOpts
+  >({
+    mask: 'NUMpx',
+    blocks: {
+      NUM: {
+        mask: Number,
+        min: 0,
       },
     },
   });
 
-  const { inputRef: heightRef } = useIMask({
-    value: height,
-    onChange: handleChangeHeight,
-    maskOptions: {
-      mask: 'NUMem',
-      blocks: {
-        NUM: {
-          mask: Number,
-          min: 0,
-          scale: 1,
-          thousandsSeparator: ' ',
-          radix: '.',
-          padFractionalZeros: true,
-          autofix: true,
-          lazy: true,
-          normalizeZeros: true,
-          mapToRadix: ['.'],
-        },
+  const { ref: heightRef, setValue: setHeight } = useIMask<
+    HTMLInputElement,
+    ReactMaskOpts
+  >({
+    mask: 'NUMem',
+    blocks: {
+      NUM: {
+        mask: Number,
+        min: 0,
+        scale: 1,
+        thousandsSeparator: ' ',
+        radix: '.',
+        padFractionalZeros: true,
+        autofix: true,
+        lazy: true,
+        normalizeZeros: true,
+        mapToRadix: ['.', ','],
       },
     },
   });
@@ -138,7 +127,7 @@ export const ConstructorVarsFont = () => {
             size="s"
             dropdownClassName={cnConstructorVarsFont('Select')}
             getItemLabel={(item) => item}
-            onChange={({ value }) => setFont(value ?? 'Inter')}
+            onChange={(value) => setFont(value ?? 'Inter')}
           />
         }
       />
@@ -147,25 +136,25 @@ export const ConstructorVarsFont = () => {
         controls={
           <div>
             <TextField
-              width="full"
               size="s"
-              value={size}
               leftSide="Добавить"
               placeholder="0px"
               caption="Настройте множитель шага, чтобы увеличить или уменьшить размер шрифта"
               label="Размер шрифта"
               className={cnMixSpace({ mB: 'xl' })}
               inputRef={sizeRef}
+              defaultValue={textSize ? `${textSize}px` : '0px'}
+              onChange={handleChangeSize}
             />
             <TextField
-              width="full"
               size="s"
               leftSide="Добавить"
-              value={height}
               inputRef={heightRef}
               placeholder="0.0em"
               caption="Настройте множитель шага, чтобы увеличить или уменьшить межстрочный интервал"
               label="Межстрочный интервал"
+              defaultValue={lineHeight ? `${lineHeight}em` : '0.0em'}
+              onChange={handleChangeHeight}
             />
           </div>
         }

@@ -1,6 +1,7 @@
-import { TextField, useIMask } from '@consta/uikit/TextField';
+import { TextField } from '@consta/uikit/TextField';
 import { useAtom } from '@reatom/npm-react';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { ReactMaskOpts, useIMask } from 'react-imask';
 
 import { SpaceExample } from '##/components/SpaceExample';
 import { VarField } from '##/components/VarField';
@@ -13,9 +14,17 @@ import { calculateSpaces } from '##/utils/theme/calculators';
 export const ConstructorVarsSpace = () => {
   const [space, setSpace] = useAtom(spaceFactorAtom);
 
-  const [value, setValue] = useState<string | null>(
-    space ? `${space}px` : '2px',
-  );
+  const { ref, setValue } = useIMask<HTMLInputElement, ReactMaskOpts>({
+    mask: 'NUMpx',
+    blocks: {
+      NUM: {
+        mask: Number,
+        min: 0,
+        radix: '.',
+        mapToRadix: ['.', ','],
+      },
+    },
+  });
 
   const spaceItems = useMemo(() => {
     const spaces = calculateSpaces(space);
@@ -29,38 +38,22 @@ export const ConstructorVarsSpace = () => {
 
   const handleChange = (value: string | null) => {
     setSpace(convertSizeToNumber(value ?? 2, 'px'));
-    setValue(value);
+    setValue(value || '');
   };
-
-  const { inputRef } = useIMask({
-    value,
-    onChange: handleChange,
-    maskOptions: {
-      mask: 'NUMpx',
-      blocks: {
-        NUM: {
-          mask: Number,
-          min: 0,
-          radix: '.',
-          mapToRadix: ['.'],
-        },
-      },
-    },
-  });
 
   return (
     <VarField
       title=".Theme_space_gpnDefault"
       controls={
         <TextField
-          width="full"
           size="s"
           label="Отступы"
           leftSide="Умножить на"
           caption="Настройте множитель шага, чтобы увеличить или уменьшить отступы"
           placeholder="2px"
-          value={value}
-          inputRef={inputRef}
+          inputRef={ref}
+          defaultValue={space ? `${space}px` : '2px'}
+          onChange={handleChange}
         />
       }
       onReset={() => handleChange('2px')}

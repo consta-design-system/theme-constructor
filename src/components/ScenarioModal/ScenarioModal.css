@@ -1,6 +1,9 @@
 .constructor--ScenarioModal {
   &.Modal-Window {
     max-width: 518px;
+    color: var(--color-typo-primary);
+    font-size: var(--size-text-m);
+    line-height: var(--line-height-text-m);
   }
 
   &-Root {
