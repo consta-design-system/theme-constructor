@@ -1489,17 +1489,30 @@
   dependencies:
     chalk "^4.1.0"
 
-"@consta/stand@^0.0.129":
-  version "0.0.129"
-  resolved "https://registry.yarnpkg.com/@consta/stand/-/stand-0.0.129.tgz#42152ab68613694b28cdee74400407a5fd288501"
-  integrity sha512-J+o0TskuNuLbhmONakznKXHxzNJb4lhfnWvkOzPwnIRwBg4QkVer6YhaUCyy5VIDkr7kHTwhd9epk5gc4o5TSA==
+"@consta/header@^3.0.0-beta.2":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@consta/header/-/header-3.0.0.tgz#b4a10653492b84107a82f1a5a28d9d0641bf4aac"
+  integrity sha512-NSAY2Lzu3MtKMunEcnMCJPVhaEPz9PIkOmu32uotN3jsgDEJbNK67KUhElx6DuN1c0ocV9aH1kVa8eLXH8XAqA==
+
+"@consta/icons@^1.0.0-beta.1 ":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@consta/icons/-/icons-1.0.1.tgz#59f51cc421de0ff14ed4308026685e82240d3473"
+  integrity sha512-TgN03C5KOzK8eBOx9Kl4GFw1SL+qSILoadWMboXwOiSHuPU7p4ie5z4ZmS7TzUnLOhybZBL3xVsM9UBOpDMKKQ==
+
+"@consta/stand@^0.0.134":
+  version "0.0.134"
+  resolved "https://registry.yarnpkg.com/@consta/stand/-/stand-0.0.134.tgz#19168240147dead858df3371c665be6d91f5ed04"
+  integrity sha512-ScxqdXZhd6hmHdn+PlVyJRrpOtHMVtlpBTifS3eJoqZx1ODmNO13iYjvE0Y7f+QAPVu5aegL8FgPPAv7mEzlfA==
   dependencies:
+    "@consta/header" "^3.0.0-beta.2"
+    "@consta/icons" "^1.0.0-beta.1 "
+    "@consta/uikit" "^5.0.0-beta.2"
     "@mdx-js/loader" "^2.3.0"
     "@mdx-js/react" "^2.3.0"
     "@oclif/command" "^1.8.22"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.5.10"
-    "@reatom/framework" "^3.4.17"
-    "@reatom/npm-react" "^3.6.0"
+    "@reatom/framework" "^3.4.30"
+    "@reatom/npm-react" "^3.8.1"
     "@reatom/persist-web-storage" "^3.2.3"
     "@svgr/core" "^6.5.1"
     "@svgr/plugin-jsx" "^6.5.1"
@@ -1559,6 +1572,11 @@
     webpack-dev-server "^4.13.1"
     webpack-manifest-plugin "^5.0.0"
     workbox-webpack-plugin "^6.4.1"
+
+"@consta/uikit@^5.0.0-beta.2":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@consta/uikit/-/uikit-5.0.0.tgz#cdd49a74369fc342cabe2f4d766d3a84bb27cc2d"
+  integrity sha512-gstxtzJY0suLNTSNFA5nt7qHQV42rNlhm2/CTpOBZdmmBAAG2ZPkmFyAWKrxQVLdHxkbERG5czcKkWZpS07z4g==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -2313,7 +2331,7 @@
     "@reatom/core" "^3.2.0"
     "@reatom/utils" "^3.5.0"
 
-"@reatom/framework@^3.4.17":
+"@reatom/framework@^3.4.30":
   version "3.4.30"
   resolved "https://registry.yarnpkg.com/@reatom/framework/-/framework-3.4.30.tgz#b4e1ae8d4f5a4896b603637f2794005213f10ee3"
   integrity sha512-apSDdt5Q8ZcIv5cY2bfIII/oJ+hyR/Ra5GnOPJED7X01gRhEIYoM3saIJgnNvRk7yYVE3SnQzyfwqSr+w0fE1w==
@@ -2365,7 +2383,7 @@
     "@reatom/jsx" "^3.4.0"
     stylerun "^1.0.0"
 
-"@reatom/npm-react@^3.6.0":
+"@reatom/npm-react@^3.8.1":
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/@reatom/npm-react/-/npm-react-3.8.1.tgz#1b0bdf083a69810744956906c1f094efb7be5e4a"
   integrity sha512-yJu1oFeJO76dBneRPqlqAEchoSqds6tXC6z+wzP/ymlq6PXths04ck5+wnzX7vCN/P1c7mk7fpWlSSnF1ZpAWw==
