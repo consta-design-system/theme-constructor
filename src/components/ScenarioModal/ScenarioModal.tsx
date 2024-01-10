@@ -1,5 +1,7 @@
 import './ScenarioModal.css';
 
+import { classnames } from '@bem-react/classnames';
+import { cnMixFlex } from '@consta/uikit/MixFlex';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Modal } from '@consta/uikit/Modal';
 import { Text } from '@consta/uikit/Text';
@@ -8,7 +10,7 @@ import { useAtom } from '@reatom/npm-react';
 import React, { useMemo } from 'react';
 
 import { useConstructorPresets } from '##/hooks/useConstructorPresets';
-import IconConsta from '##/icons/Consta.icon.svg';
+import IconConsta from '##/icons/Consta.colorIcon.svg';
 import { autoSavePresetAtom } from '##/modules/autosave';
 import { cn } from '##/utils/bem';
 
@@ -72,13 +74,16 @@ export const ScenarioModal = (props: Props) => {
       ])}
       rootClassName={cnScenarioModal('Root')}
     >
-      <IconConsta />
       <Text
         weight="semibold"
         size="l"
         lineHeight="m"
-        className={cnMixSpace({ mT: 's', mB: '2xs' })}
+        className={classnames(
+          cnMixFlex({ align: 'center' }),
+          cnMixSpace({ mT: 's', mB: '2xs' }),
+        )}
       >
+        <IconConsta size="m" className={cnMixSpace({ mR: 's' })} />
         Конструктор тем Consta
       </Text>
       <Text

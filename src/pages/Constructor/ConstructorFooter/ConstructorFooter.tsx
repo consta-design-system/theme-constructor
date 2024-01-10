@@ -4,7 +4,7 @@ import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { Text } from '@consta/uikit/Text';
 import React from 'react';
 
-import IconConsta from '##/icons/Consta.icon.svg';
+import IconConsta from '##/icons/Consta.colorIcon.svg';
 import { cn } from '##/utils/bem';
 
 const cnConstructorFooter = cn('ConstructorFooter');
