@@ -104,6 +104,7 @@ export const Menu = (props: Props) => {
                   lineHeight="xs"
                   className={cnMenu('Item', [cnMixSpace({ pH: 'xs' })])}
                   onClick={item.onClick}
+                  view="primary"
                   {...(item.href
                     ? {
                         as: 'a',
