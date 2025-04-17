@@ -26,7 +26,7 @@ export const ConstructorExample: React.FC<{
   containerRef?: React.RefObject<HTMLDivElement>;
 }> = ({ className, containerRef }) => {
   const [sticky, setSticky] = useFlag();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
   const { height } = useComponentSize(ref);
 

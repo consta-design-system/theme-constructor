@@ -18,12 +18,13 @@ export type ConstructorExampleAnalyticCardProps = {
   closedTasks: number;
 };
 
-const badgeLabelMap: Record<BadgePropStatus, string> = {
+const badgeLabelMap: Record<Exclude<BadgePropStatus, 'alert'>, string> = {
   success: 'Успех',
   normal: 'Устанавливается',
   system: 'Отмена',
   warning: 'Ошибка',
   error: 'Провал',
+  disabled: 'Отключено',
 };
 
 export const ConstructorExampleAnalyticCard = (

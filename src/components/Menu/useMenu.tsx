@@ -31,7 +31,7 @@ const groupsArr = [
 
 type Params = {
   onClose?: () => void;
-  inputRef?: React.RefObject<HTMLInputElement>;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
 };
 
 export const useMenu = (params: Params) => {

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["dom", "es2015", "esnext"],
+    "target": "ES2020",
+    "lib": ["dom", "ES2020", "esnext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -35,6 +35,7 @@
     "**/__stories__/*",
     "__stories__",
     "repositories",
-    "**/repositories/*"
+    "**/repositories/*",
+    "node_modules/@types/react-syntax-highlighter/*"
   ]
 }

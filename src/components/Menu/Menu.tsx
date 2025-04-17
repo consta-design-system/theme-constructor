@@ -114,8 +114,10 @@ export const Menu = (props: Props) => {
                         as: 'button',
                       })}
                 >
-                  {item.label}
-                  {item.rightSide}
+                  <>
+                    {item.label}
+                    {item.rightSide}
+                  </>
                 </Text>
               ))}
             </div>

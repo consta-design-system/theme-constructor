@@ -25,7 +25,9 @@ type Props = {
 export const ConstructorExampleAnalytic = (props: Props) => {
   const { className } = props;
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(
+    null,
+  ) as React.RefObject<HTMLButtonElement>;
 
   return (
     <>

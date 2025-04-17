@@ -12,7 +12,9 @@ import { ConstructorLeftSide } from './ConstructorLeftSide';
 const cnConstructor = cn('Constructor');
 
 export const Constructor = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(
+    null,
+  ) as React.RefObject<HTMLDivElement>;
   return (
     <App>
       <div className={cnConstructor()}>
